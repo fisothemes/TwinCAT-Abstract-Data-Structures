@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7c1a7945-6c86-4d8f-acba-4f3b0827eb7a}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
-    <Name>AbstactDataTypes</Name>
+    <Name>AbstactDataStructures</Name>
     <ProgramVersion>3.1.4022.7</ProgramVersion>
     <Application>{202372bd-0ccc-40a7-875d-89dfc672fef5}</Application>
     <TypeSystem>{c706ecd9-8165-4f8a-b6b5-c996b0a49192}</TypeSystem>
@@ -49,7 +49,7 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AbstactDataTypes.tmc">
+    <None Include="AbstactDataStructures.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>
