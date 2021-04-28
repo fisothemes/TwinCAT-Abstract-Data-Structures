@@ -34,17 +34,16 @@ ELSE  pTail^.pNext := pTemp; pTail := pTail^.pNext; END_IF // Point previous nod
     </Method>
     <Method Name="Display" Id="{44cc05c3-a73a-485e-b7c4-9f46d1a3c88e}">
       <Declaration><![CDATA[// Traverse the list to display each node
-METHOD Display : BOOL
+METHOD Display
 VAR_IN_OUT
-	aList : ARRAY[*] OF INT;
+	aList 		: ARRAY[*] OF INT;
 END_VAR
 VAR
-	pCurrent :  POINTER TO _ST_NODE_;
-	i : DINT;
+	pCurrent 	:  POINTER TO _ST_NODE_;
+	i 			: DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//pCurrent := __NEW(_ST_NODE_); 	// Allocate space in memory for a node.
-pCurrent := pHead;
+        <ST><![CDATA[pCurrent := pHead;
 i := LOWER_BOUND(aList, 1);
 WHILE pCurrent <> 0 AND i < UPPER_BOUND(aList, 1) DO
 	aList[i] := pCurrent^.iData;
@@ -62,6 +61,41 @@ METHOD Init
 pTail := NULL;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Insert" Id="{b50ffa90-bffd-42d6-880d-1e20342d73fd}">
+      <Declaration><![CDATA[// Inserts node at a specific position in the list
+METHOD Insert
+VAR_INPUT
+	iValue 		: INT;
+	iPosition 	: INT;
+END_VAR
+VAR
+	pPrevious 	: POINTER TO _ST_NODE_;
+	pCurrent 	: POINTER TO _ST_NODE_;
+	pTemp 		: POINTER TO _ST_NODE_;
+	i 			: INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{fc4a9c4f-82e1-46e6-8281-109c5a2f41f3}">
+      <Declaration><![CDATA[//Adds/pushes a node at the start of the list 
+METHOD Push
+VAR_INPUT
+	iValue 	: INT;
+END_VAR
+VAR
+	pTemp 	:  POINTER TO _ST_NODE_;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTemp := __NEW(_ST_NODE_); 	// Allocate space in memory for a node.
+pTemp^.iData := iValue;
+pTemp^.pNext := pHead;
+pHead := pTemp;]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="HgFB_Linked_List">
       <LineId Id="24" Count="0" />
     </LineIds>
@@ -74,7 +108,6 @@ pTail := NULL;]]></ST>
       <LineId Id="11" Count="0" />
     </LineIds>
     <LineIds Name="HgFB_Linked_List.Display">
-      <LineId Id="12" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="5" Count="0" />
@@ -85,6 +118,13 @@ pTail := NULL;]]></ST>
     <LineIds Name="HgFB_Linked_List.Init">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="HgFB_Linked_List.Insert">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="HgFB_Linked_List.Push">
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="2" />
     </LineIds>
   </POU>
 </TcPlcObject>

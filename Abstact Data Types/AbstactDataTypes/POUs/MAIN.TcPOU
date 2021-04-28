@@ -10,11 +10,12 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[ CASE nState OF 
-	0: // Run fuctions once
+	0: // Runs functions once
 		fbLinked_List.Init();
 		fbLinked_List.Create(1);
 		fbLinked_List.Create(2);
 		fbLinked_List.Create(3);
+		fbLinked_List.Push(12);
 		fbLinked_List.Display(aArray);
 		
 		
@@ -28,6 +29,7 @@ END_CASE]]></ST>
       <LineId Id="20" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="27" Count="0" />
+      <LineId Id="52" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="43" Count="1" />
       <LineId Id="25" Count="0" />
