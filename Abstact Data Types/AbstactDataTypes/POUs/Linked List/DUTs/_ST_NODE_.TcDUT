@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <DUT Name="_ST_NODE_" Id="{ae72523c-b4d2-4bc3-a909-213c887bca25}">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+TYPE _ST_NODE_ :
+STRUCT
+	iData : INT;
+	pNext : POINTER TO _ST_NODE_;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

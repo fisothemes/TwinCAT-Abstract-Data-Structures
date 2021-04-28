@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="1c02436b-f1d7-46b9-bde8-e418c191c48f">CREATE_NODE</Type>
+      <From>Create_Node</From>
+      <To>Create</To>
+    </RenamedType>
+    <RenamedType>
+      <Type guid="44cc05c3-a73a-485e-b7c4-9f46d1a3c88e">DISPLAY_LIST</Type>
+      <From>Display_List</From>
+      <To>Display</To>
+    </RenamedType>
+  </Renames>
+</Refactors>

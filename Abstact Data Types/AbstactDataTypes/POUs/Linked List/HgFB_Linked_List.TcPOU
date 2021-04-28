@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="HgFB_Linked_List" Id="{19223dee-072c-4cbb-9e58-eedc7741ea7e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK HgFB_Linked_List
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	pHead :  POINTER TO _ST_NODE_;
+	pTail :  POINTER TO _ST_NODE_;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Create" Id="{1c02436b-f1d7-46b9-bde8-e418c191c48f}">
+      <Declaration><![CDATA[// Adds an node to the end of the linked list
+METHOD Create
+VAR_INPUT
+	iValue : INT;
+END_VAR
+VAR
+	pTemp :  POINTER TO _ST_NODE_;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTemp := __NEW(_ST_NODE_); 	// Allocate space in memory for a node.
+pTemp^.iData := iValue;		// Assign Data to the new node.
+pTemp^.pNext := NULL;		// Pointer to next node is NULL.
+IF pHead = 0 THEN pHead := pTemp; pTail := pTemp; // If the pointer to the pHead is NULL then give it an address. The pTail address of the first node is the pHead.
+ELSE  pTail^.pNext := pTemp; pTail := pTail^.pNext; END_IF // Point previous node's pNext to the address of pTemp and set pTail to pTemp.
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Display" Id="{44cc05c3-a73a-485e-b7c4-9f46d1a3c88e}">
+      <Declaration><![CDATA[// Traverse the list to display each node
+METHOD Display : BOOL
+VAR_IN_OUT
+	aList : ARRAY[*] OF INT;
+END_VAR
+VAR
+	pCurrent :  POINTER TO _ST_NODE_;
+	i : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//pCurrent := __NEW(_ST_NODE_); 	// Allocate space in memory for a node.
+pCurrent := pHead;
+i := LOWER_BOUND(aList, 1);
+WHILE pCurrent <> 0 AND i < UPPER_BOUND(aList, 1) DO
+	aList[i] := pCurrent^.iData;
+	pCurrent := pCurrent^.pNext;
+	i := i+1;
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{d3845c5b-4488-4a2a-83ef-21fe8d01c1da}">
+      <Declaration><![CDATA[// Initializes or create an empty list
+METHOD Init
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pHead := NULL;
+pTail := NULL;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="HgFB_Linked_List">
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="HgFB_Linked_List.Create">
+      <LineId Id="32" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="HgFB_Linked_List.Display">
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="HgFB_Linked_List.Init">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
