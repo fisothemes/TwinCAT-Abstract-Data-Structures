@@ -17,10 +17,13 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Linked List\DUTs\_ST_NODE_.TcDUT">
+    <Compile Include="POUs\Linked List\DUTs\T_DATA_TYPE.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Linked List\HgFB_Linked_List.TcPOU">
+    <Compile Include="POUs\Linked List\DUTs\ST_NODE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Linked List\FB_Linked_List.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
