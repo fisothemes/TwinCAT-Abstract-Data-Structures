@@ -3,38 +3,13 @@
   <POU Name="MAIN" Id="{86dc0999-fc6b-4ce8-a12d-7649401b850c}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	nState : BYTE;
-	fbLinked_List : FB_Linked_List;
-	aArray : ARRAY[0..100] OF T_DATA_TYPE;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[ CASE nState OF 
-	0: // Runs functions once
-		fbLinked_List.Init();
-		fbLinked_List.Create(1);
-		fbLinked_List.Create(2);
-		fbLinked_List.Create(3);
-		fbLinked_List.Push(12);
-		fbLinked_List.Insert(20,2);
-		fbLinked_List.Pop();
-		
-		
-		fbLinked_List.Display(aArray);
-		nState := nState + 1;
-END_CASE]]></ST>
+      <ST><![CDATA[P_Linked_List_Example();]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="2" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="59" Count="3" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="25" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
   </POU>

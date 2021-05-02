@@ -26,6 +26,9 @@
     <Compile Include="POUs\Linked List\FB_Linked_List.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Linked List\P_Linked_List_Example.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>

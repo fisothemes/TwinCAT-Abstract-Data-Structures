@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <POU Name="FB_Linked_List" Id="{19223dee-072c-4cbb-9e58-eedc7741ea7e}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Linked_List
+    <Declaration><![CDATA[// Operated on linked list of type defined by T_DATA_TYPE Alias 
+FUNCTION_BLOCK FB_Linked_List
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -15,10 +16,10 @@ END_VAR
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Create" Id="{1c02436b-f1d7-46b9-bde8-e418c191c48f}">
-      <Declaration><![CDATA[// Adds an node to the end of the linked list
+      <Declaration><![CDATA[// Creates/Adds an node to the end of the list
 METHOD Create
 VAR_INPUT
-	Data : T_DATA_TYPE;
+	Data : T_DATA_TYPE; // Data to add to new node.
 END_VAR
 VAR
 	pTemp :  POINTER TO ST_NODE;
@@ -32,24 +33,18 @@ ELSE  pTail^.pNext := pTemp; pTail := pTail^.pNext; END_IF // Point previous nod
 ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Display" Id="{44cc05c3-a73a-485e-b7c4-9f46d1a3c88e}">
-      <Declaration><![CDATA[// Traverse the list to display each node
-METHOD Display
-VAR_IN_OUT
-	aList 		: ARRAY[*] OF T_DATA_TYPE;
-END_VAR
+    <Method Name="Empty" Id="{317ea86d-3d25-4a24-9aeb-8dd8eb13f3f4}">
+      <Declaration><![CDATA[// Empties/Clears/Deletes list
+METHOD Empty
 VAR
-	pCurrent 	:  POINTER TO ST_NODE;
-	i 			: DINT;
+	pTemp : POINTER TO ST_NODE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pCurrent := pHead;
-i := LOWER_BOUND(aList, 1);
-WHILE pCurrent <> 0 AND i < UPPER_BOUND(aList, 1) DO
-	aList[i] := pCurrent^.Data;
-	pCurrent := pCurrent^.pNext;
-	i := i+1;
-END_WHILE]]></ST>
+        <ST><![CDATA[pTemp := pHead;
+WHILE pTemp <> 0 DO
+	pTemp := pTemp^.pNext; Pop();
+END_WHILE
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Init" Id="{d3845c5b-4488-4a2a-83ef-21fe8d01c1da}">
@@ -58,15 +53,16 @@ METHOD Init
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[pHead := NULL;
-pTail := NULL;]]></ST>
+pTail := NULL;
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Insert" Id="{b50ffa90-bffd-42d6-880d-1e20342d73fd}">
       <Declaration><![CDATA[// Inserts node at a specific position in the list
 METHOD Insert
 VAR_INPUT
-	Data 		: T_DATA_TYPE;
-	nPosition 	: UXINT; 
+	Data 		: T_DATA_TYPE; 	// Data to add to new node.
+	nPosition 	: UXINT;		// Position to add new node in list.
 END_VAR
 VAR
 	pPrevious 	: POINTER TO ST_NODE;
@@ -76,11 +72,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[// Create new node
-//pPrevious := __NEW(ST_NODE);
-//pCurrent := __NEW(ST_NODE); 	
-pTemp := __NEW(ST_NODE);
-
+        <ST><![CDATA[pTemp := __NEW(ST_NODE);
 pCurrent := pHead;
 FOR i := 1 TO nPosition DO
 	pPrevious := pCurrent;
@@ -121,32 +113,85 @@ pTemp^.pNext := pHead;
 pHead := pTemp;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Remove" Id="{e27d3464-0225-4467-9f8c-0a726d2728f5}">
+      <Declaration><![CDATA[// Deletes node at a specific position in the list
+METHOD Remove
+VAR_INPUT
+	nPosition 	: UXINT; // Position of node to delete.
+END_VAR
+VAR
+	pPrevious 	: POINTER TO ST_NODE;
+	pCurrent 	: POINTER TO ST_NODE;
+	i 			: UXINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pCurrent := pHead;
+FOR i := 2 TO nPosition DO
+	pPrevious := pCurrent;
+	pCurrent := pCurrent^.pNext;
+	END_FOR;
+pPrevious^.pNext := pCurrent^.pNext;
+__DELETE(pCurrent);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{44cc05c3-a73a-485e-b7c4-9f46d1a3c88e}">
+      <Declaration><![CDATA[// Traverse the list to display each node
+METHOD Show
+VAR_IN_OUT
+	aList 		: ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+VAR
+	pCurrent 	:  POINTER TO ST_NODE;
+	i 			: DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pCurrent := pHead;
+i := LOWER_BOUND(aList, 1);
+WHILE pCurrent <> 0 AND i < UPPER_BOUND(aList, 1) DO
+	aList[i] := pCurrent^.Data;
+	pCurrent := pCurrent^.pNext;
+	i := i+1;
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Size" Id="{cdf20009-0222-43c5-990c-054c16153aa7}">
+      <Declaration><![CDATA[// Gets size of the list
+METHOD Size : UXINT;
+VAR
+	pTemp 	: POINTER TO ST_NODE;
+	i 		: UXINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTemp := pHead;
+WHILE pTemp <> 0 DO
+	pTemp := pTemp^.pNext; i := i + 1;;
+END_WHILE
+Size := i;]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_Linked_List">
       <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Linked_List.Create">
       <LineId Id="48" Count="4" />
-      <LineId Id="11" Count="0" />
+      <LineId Id="60" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Display">
-      <LineId Id="11" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="15" Count="1" />
-      <LineId Id="10" Count="0" />
+    <LineIds Name="FB_Linked_List.Empty">
+      <LineId Id="31" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="51" Count="0" />
     </LineIds>
     <LineIds Name="FB_Linked_List.Init">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
+      <LineId Id="30" Count="0" />
     </LineIds>
     <LineIds Name="FB_Linked_List.Insert">
-      <LineId Id="49" Count="0" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="53" Count="0" />
+      <LineId Id="52" Count="1" />
       <LineId Id="43" Count="1" />
       <LineId Id="59" Count="0" />
       <LineId Id="45" Count="0" />
@@ -161,6 +206,24 @@ pHead := pTemp;]]></ST>
     <LineIds Name="FB_Linked_List.Push">
       <LineId Id="30" Count="2" />
       <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List.Remove">
+      <LineId Id="53" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="90" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List.Show">
+      <LineId Id="30" Count="5" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List.Size">
+      <LineId Id="12" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
