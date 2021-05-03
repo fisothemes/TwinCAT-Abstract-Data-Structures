@@ -42,7 +42,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pTemp := pHead;
 WHILE pTemp <> 0 DO
-	pTemp := pTemp^.pNext; Pop();
+	pTemp := pTemp^.pNext; THIS^.Pop();
 END_WHILE
 ]]></ST>
       </Implementation>
@@ -74,7 +74,7 @@ END_VAR
       <Implementation>
         <ST><![CDATA[pTemp := __NEW(ST_NODE);
 pCurrent := pHead;
-FOR i := 1 TO nPosition DO
+FOR i := 2 TO nPosition DO
 	pPrevious := pCurrent;
 	pCurrent := pPrevious^.pNext;
 	END_FOR;
@@ -133,6 +133,28 @@ FOR i := 2 TO nPosition DO
 	END_FOR;
 pPrevious^.pNext := pCurrent^.pNext;
 __DELETE(pCurrent);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Search" Id="{da5f7172-2114-4eed-8448-2548351cb82a}">
+      <Declaration><![CDATA[// Searches list for the first instance of data and returns it's location and whether it's in the list.
+METHOD Search : BOOL
+VAR_INPUT
+	Data : T_DATA_TYPE; // Data to find in list
+END_VAR
+VAR_OUTPUT
+	nPosition : UXINT; // Location of the data  starting from 1. 0 means data is not found in list
+END_VAR
+VAR
+	pTemp 	: POINTER TO ST_NODE;
+	i 		: UXINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTemp := pHead;
+FOR i := 1 TO THIS^.Size() DO
+	Search := pTemp^.Data = Data;
+	IF Search THEN nPosition := i; EXIT; ELSE nPosition := 0; END_IF
+	pTemp := pTemp^.pNext;
+	END_FOR]]></ST>
       </Implementation>
     </Method>
     <Method Name="Show" Id="{44cc05c3-a73a-485e-b7c4-9f46d1a3c88e}">
@@ -215,6 +237,12 @@ Size := i;]]></ST>
       <LineId Id="45" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="90" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List.Search">
+      <LineId Id="5" Count="0" />
+      <LineId Id="61" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="1" />
     </LineIds>
     <LineIds Name="FB_Linked_List.Show">
       <LineId Id="30" Count="5" />

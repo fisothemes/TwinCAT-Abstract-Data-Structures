@@ -6,16 +6,16 @@ VAR
 	nState 			: BYTE;
 	fbLinked_List 	: FB_Linked_List;
 	
+	bFound 			: BOOL;		// Is data in the created list?
+	nPosition 		: ULINT;	// At what position is the data on the list? 0 means no data found. Head mode is 1.
+	
 	nSize 			: ULINT; 	// Dispays size of list after it's created
 	nDelete_Size 	: ULINT; 	// Displays size of list after deleting an element.
 	nInsert_Size 	: ULINT; 	// Displays size of list after inserting an element.
 	
-	aArray 			: ARRAY[0..5] OF T_DATA_TYPE; // Displays created list.
-	aDelete_Array 	: ARRAY[0..5] OF T_DATA_TYPE; // Displays list after deleting element at a position.
-	aInsert_Array	: ARRAY[0..5] OF T_DATA_TYPE; // Displays list after inserting element at a position.
-	
-	 
-
+	aArray 			: ARRAY[1..6] OF T_DATA_TYPE; // Displays created list.
+	aDelete_Array 	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after deleting element at a position.
+	aInsert_Array	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after inserting element at a position.
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,20 +24,22 @@ END_VAR
 		fbLinked_List.Init();
 		nState := nState + 1;
 		
-	1: // Create list, display list and list size
+	1: // Create list, display list, get list size and find an item in the list.
 		fbLinked_List.Create(1);
 		fbLinked_List.Create(2);
 		fbLinked_List.Create(3);
 		fbLinked_List.Create(4);
 		fbLinked_List.Create(5);
 		fbLinked_List.Show(aArray);
+		
 		nSize := fbLinked_List.Size();
+		bFound := fbLinked_List.Search(Data := 5, nPosition => nPosition);
 
 		nState := nState + 1;			
 	
-	2: // Remove an elements from the list, display list and the list size
-		fbLinked_List.Pop();
+	2: // Remove an elements from the list, display list and get the list size
 		fbLinked_List.Remove(3);
+		fbLinked_List.Pop();
 		fbLinked_List.Show(aDelete_Array);
 		nDelete_Size := fbLinked_List.Size();
 		
@@ -45,7 +47,7 @@ END_VAR
 	
 	3: // Insert elements into list, display it and the list size
 		fbLinked_List.Push(11);
-		fbLinked_List.Insert(14,3);
+		fbLinked_List.Insert(13,3);
 		fbLinked_List.Show(aInsert_Array);
 		nInsert_Size := fbLinked_List.Size();
 		
@@ -65,17 +67,21 @@ END_CASE]]></ST>
       <LineId Id="100" Count="0" />
       <LineId Id="108" Count="3" />
       <LineId Id="106" Count="1" />
+      <LineId Id="173" Count="0" />
       <LineId Id="112" Count="0" />
+      <LineId Id="153" Count="0" />
       <LineId Id="130" Count="0" />
       <LineId Id="129" Count="0" />
       <LineId Id="103" Count="1" />
+      <LineId Id="175" Count="0" />
       <LineId Id="119" Count="0" />
-      <LineId Id="88" Count="0" />
       <LineId Id="113" Count="1" />
       <LineId Id="131" Count="1" />
       <LineId Id="115" Count="0" />
       <LineId Id="117" Count="0" />
-      <LineId Id="123" Count="3" />
+      <LineId Id="178" Count="0" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="125" Count="1" />
       <LineId Id="133" Count="1" />
       <LineId Id="44" Count="0" />
       <LineId Id="84" Count="0" />
