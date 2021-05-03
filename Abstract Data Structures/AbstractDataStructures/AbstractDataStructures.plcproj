@@ -55,7 +55,7 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AbstactDataStructures.tmc">
+    <None Include="AbstractDataStructures.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>

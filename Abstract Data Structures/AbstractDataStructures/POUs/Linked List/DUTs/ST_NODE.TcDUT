@@ -4,8 +4,9 @@
     <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
 TYPE ST_NODE :
 STRUCT
-	Data 	: T_DATA_TYPE;
-	pNext 	: POINTER TO ST_NODE := NULL;
+	pPrevious 	: POINTER TO ST_NODE := NULL;
+	Data 		: T_DATA_TYPE;
+	pNext 		: POINTER TO ST_NODE := NULL;
 END_STRUCT
 END_TYPE
 ]]></Declaration>
