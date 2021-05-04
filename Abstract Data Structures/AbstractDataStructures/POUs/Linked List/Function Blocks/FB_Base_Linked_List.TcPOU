@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="FB_Linked_List" Id="{19223dee-072c-4cbb-9e58-eedc7741ea7e}" SpecialFunc="None">
-    <Declaration><![CDATA[// Operated on linked list of type defined by T_DATA_TYPE Alias 
-FUNCTION_BLOCK FB_Linked_List
+  <POU Name="FB_Base_Linked_List" Id="{19223dee-072c-4cbb-9e58-eedc7741ea7e}" SpecialFunc="None">
+    <Declaration><![CDATA[// Linear/Singly Linked List
+FUNCTION_BLOCK FB_Base_Linked_List IMPLEMENTS I_Linked_List
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -193,26 +193,26 @@ END_WHILE
 Size := i;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_Linked_List">
+    <LineIds Name="FB_Base_Linked_List">
       <LineId Id="24" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Create">
+    <LineIds Name="FB_Base_Linked_List.Create">
       <LineId Id="48" Count="4" />
       <LineId Id="60" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Empty">
+    <LineIds Name="FB_Base_Linked_List.Empty">
       <LineId Id="31" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="51" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Init">
+    <LineIds Name="FB_Base_Linked_List.Init">
       <LineId Id="6" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="30" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Insert">
+    <LineIds Name="FB_Base_Linked_List.Insert">
       <LineId Id="52" Count="1" />
       <LineId Id="43" Count="1" />
       <LineId Id="59" Count="0" />
@@ -220,16 +220,16 @@ Size := i;]]></ST>
       <LineId Id="5" Count="0" />
       <LineId Id="60" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Pop">
+    <LineIds Name="FB_Base_Linked_List.Pop">
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="12" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Push">
+    <LineIds Name="FB_Base_Linked_List.Push">
       <LineId Id="30" Count="2" />
       <LineId Id="13" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Remove">
+    <LineIds Name="FB_Base_Linked_List.Remove">
       <LineId Id="53" Count="0" />
       <LineId Id="43" Count="0" />
       <LineId Id="91" Count="0" />
@@ -238,17 +238,17 @@ Size := i;]]></ST>
       <LineId Id="5" Count="0" />
       <LineId Id="90" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Search">
+    <LineIds Name="FB_Base_Linked_List.Search">
       <LineId Id="5" Count="0" />
       <LineId Id="61" Count="1" />
       <LineId Id="71" Count="0" />
       <LineId Id="73" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Show">
+    <LineIds Name="FB_Base_Linked_List.Show">
       <LineId Id="30" Count="5" />
       <LineId Id="10" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Linked_List.Size">
+    <LineIds Name="FB_Base_Linked_List.Size">
       <LineId Id="12" Count="2" />
       <LineId Id="5" Count="0" />
       <LineId Id="15" Count="0" />

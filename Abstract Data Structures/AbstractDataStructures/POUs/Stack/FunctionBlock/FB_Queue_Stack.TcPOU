@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_Queue_Stack" Id="{f248fb0a-d0a2-4ad6-84b3-ed190aee8290}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Queue_Stack IMPLEMENTS I_Stack
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Peek" Id="{18190e9c-a2e4-4e82-bd24-c801e3a00d7a}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Peek : T_DATA_TYPE
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{c4574ff8-375c-4b2c-85f4-890732572ca9}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Pop
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{90e5158c-1a1a-4bbe-9c95-68066520ce31}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Push
+VAR_INPUT
+	Data	: T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{13d89b5a-ee98-40b0-9f4b-68da6cae9832}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Show
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Queue_Stack">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Queue_Stack.Peek">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Queue_Stack.Pop">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Queue_Stack.Push">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Queue_Stack.Show">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

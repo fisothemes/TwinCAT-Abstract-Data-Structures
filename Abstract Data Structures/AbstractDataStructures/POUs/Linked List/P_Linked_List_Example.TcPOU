@@ -4,7 +4,7 @@
     <Declaration><![CDATA[PROGRAM P_Linked_List_Example
 VAR
 	nState 			: BYTE;
-	fbLinked_List 	: FB_Linked_List;
+	fbLinked_List 	: FB_Base_Linked_List;
 	
 	bFound 			: BOOL;		// Is data in the created list?
 	nPosition 		: ULINT;	// At what position is the data on the list? 0 means no data found. Head mode is 1.

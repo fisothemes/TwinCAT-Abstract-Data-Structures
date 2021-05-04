@@ -14,16 +14,25 @@
     <LibraryReferences>{fe19dd58-f65d-4276-bae9-57c7fe016008}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\ST_NODE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\T_DATA_TYPE.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Linked List\DUTs\T_DATA_TYPE.TcDUT">
+    <Compile Include="POUs\Linked List\Function Blocks\FB_Base_Linked_List.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Linked List\DUTs\ST_NODE.TcDUT">
+    <Compile Include="POUs\Linked List\Function Blocks\FB_Circular_Linked_List.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Linked List\FB_Linked_List.TcPOU">
+    <Compile Include="POUs\Linked List\Function Blocks\FB_Doubly_Linked_List.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Linked List\Interface\I_Linked_List.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Linked List\P_Linked_List_Example.TcPOU">
@@ -32,11 +41,35 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Stack\FunctionBlock\FB_Base_Stack.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Stack\FunctionBlock\FB_Dynamic_Stack.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Stack\FunctionBlock\FB_Linked_List_Stack.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Stack\FunctionBlock\FB_Queue_Stack.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Stack\Interface\I_Stack.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DUTs" />
     <Folder Include="GVLs" />
     <Folder Include="POUs\Linked List" />
-    <Folder Include="POUs\Linked List\DUTs" />
+    <Folder Include="POUs\Linked List\Interface" />
+    <Folder Include="POUs\Linked List\Function Blocks" />
+    <Folder Include="POUs\Binary Search Tree" />
+    <Folder Include="POUs\Queue" />
+    <Folder Include="POUs\Queue\Interface" />
+    <Folder Include="POUs\Queue\Function Block" />
+    <Folder Include="POUs\Stack" />
+    <Folder Include="POUs\Stack\FunctionBlock" />
+    <Folder Include="POUs\Stack\Interface" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
