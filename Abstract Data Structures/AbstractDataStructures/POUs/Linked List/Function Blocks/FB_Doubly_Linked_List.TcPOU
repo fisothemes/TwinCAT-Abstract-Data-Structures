@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <POU Name="FB_Doubly_Linked_List" Id="{03f6cb54-b49e-4d08-867b-b49ddd590b59}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Doubly_Linked_List IMPLEMENTS I_Linked_List
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Doubly_Linked_List EXTENDS FB_Base_Linked_List IMPLEMENTS I_Linked_List
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -20,28 +20,14 @@ VAR_INPUT
 	(* Data to add to new node.*)
 	Data	: T_DATA_TYPE;
 END_VAR
+VAR
+	pTemp :  POINTER TO ST_NODE;
+END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Empty" Id="{13b07b7d-29f4-462f-80ab-63c642c8cda8}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-(* Empties/Clears/Deletes list*)
-METHOD Empty
-	pTemp	: POINTER TO ST_NODE;
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Init" Id="{28f1b4fd-cd0a-476e-b533-29fe33ce49ad}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-(* Initializes or create an empty list*)
-METHOD Init
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[pTemp := pTail;
+SUPER^.Create(Data);
+IF SUPER^.pHead^.pNext <> 0 THEN SUPER^.pTail^.pPrevious := pTemp; END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Insert" Id="{a2deca27-6648-4030-8273-4c1592694cd7}">
@@ -61,7 +47,7 @@ END_VAR
     </Method>
     <Method Name="Pop" Id="{57f6bc23-5136-40d5-b964-533e7903d35d}">
       <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD Pop
+METHOD Pop : T_DATA_TYPE
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
@@ -81,7 +67,7 @@ END_VAR
     <Method Name="Remove" Id="{6e058adb-4972-4a7b-a117-85ef4a2c1908}">
       <Declaration><![CDATA[{warning 'add method implementation '}
 (* Deletes node at a specific position in the list*)
-METHOD Remove
+METHOD Remove : T_DATA_TYPE
 VAR_INPUT
 	(* Position of node to delete.*)
 	nPosition	: UXINT;
@@ -108,34 +94,12 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Show" Id="{8dbf6dac-001b-468c-bddc-48e5342ec7ae}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD Show
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Size" Id="{99c2f4dd-ee7e-4556-89ac-f7318d382c33}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-(* Gets size of the list*)
-METHOD Size : UXINT
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <LineIds Name="FB_Doubly_Linked_List">
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Create">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Doubly_Linked_List.Empty">
-      <LineId Id="6" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Doubly_Linked_List.Init">
-      <LineId Id="5" Count="0" />
+      <LineId Id="34" Count="1" />
+      <LineId Id="32" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Insert">
       <LineId Id="11" Count="0" />
@@ -151,12 +115,6 @@ METHOD Size : UXINT
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Search">
       <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Doubly_Linked_List.Show">
-      <LineId Id="4" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Doubly_Linked_List.Size">
-      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

@@ -27,8 +27,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pTemp := __NEW(ST_NODE); 	// Allocate space in memory for a node.
 pTemp^.Data := Data;		// Assign Data to the new node.
-pTemp^.pNext := NULL;		// Pointer to next node is NULL.
-IF pHead = 0 THEN pHead := pTemp; pTail := pTemp; // If the pointer to the pHead is NULL then give it an address. The pTail address of the first node is the pHead.
+IF pHead = 0 THEN pHead := pTemp; pTail := pHead; // If the pointer to the pHead is NULL then give it an address. The pTail address of the first node is the pHead.
 ELSE  pTail^.pNext := pTemp; pTail := pTail^.pNext; END_IF // Point previous node's pNext to the address of pTemp and set pTail to pTemp.
 ]]></ST>
       </Implementation>
@@ -83,15 +82,40 @@ pPrevious^.pNext := pTemp;
 pTemp^.pNext := pCurrent;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Peek" Id="{f9661eb4-84c7-4278-8349-13b6ce0350b5}">
+      <Declaration><![CDATA[// Gets element at any position of the list. Returns 0 if element is not found
+METHOD Peek : T_DATA_TYPE
+VAR_INPUT
+	nPosition : UXINT;
+END_VAR
+VAR 
+	i : UXINT;
+	pTemp : POINTER TO ST_NODE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nPosition > 0 AND nPosition <= THIS^.Size() THEN
+	pTemp := pHead;
+	FOR i := 1 TO nPosition DO
+		Peek := pTemp^.Data;
+		pTemp := pTemp^.pNext;
+		END_FOR
+ELSE
+	Peek := 0;
+	END_IF
+]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Pop" Id="{a3623de3-4c8b-4ca0-a7a5-e2d659fad6d5}">
       <Declaration><![CDATA[// Deletes/pops a node at the start of the list 
-METHOD Pop
+METHOD Pop : T_DATA_TYPE
 VAR
 	pTemp : POINTER TO ST_NODE;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pTemp := pHead^.pNext;
+        <ST><![CDATA[Pop := pHead^.Data;
+pTemp := pHead^.pNext;
 __DELETE(pHead);
 pHead := pTemp;]]></ST>
       </Implementation>
@@ -115,7 +139,7 @@ pHead := pTemp;]]></ST>
     </Method>
     <Method Name="Remove" Id="{e27d3464-0225-4467-9f8c-0a726d2728f5}">
       <Declaration><![CDATA[// Deletes node at a specific position in the list
-METHOD Remove
+METHOD Remove : T_DATA_TYPE
 VAR_INPUT
 	nPosition 	: UXINT; // Position of node to delete.
 END_VAR
@@ -131,8 +155,28 @@ FOR i := 2 TO nPosition DO
 	pPrevious := pCurrent;
 	pCurrent := pCurrent^.pNext;
 	END_FOR;
+Remove := pCurrent^.Data;
 pPrevious^.pNext := pCurrent^.pNext;
 __DELETE(pCurrent);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reverse" Id="{8f33e087-c457-40cd-8db6-ce49ffbb0801}">
+      <Declaration><![CDATA[// Reverse list
+METHOD Reverse
+VAR_INST
+	pPrevious 	: POINTER TO ST_NODE;
+	pCurrent 	: POINTER TO ST_NODE;
+	pTemp 		: POINTER TO ST_NODE;
+	i : UXINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO THIS^.Size() DO
+	pHead^.pNext := pCurrent^.pNext;
+	pCurrent^.pNext := pPrevious;
+	pPrevious := pCurrent;
+	pCurrent := pHead^.pNext; 
+END_FOR
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Search" Id="{da5f7172-2114-4eed-8448-2548351cb82a}">
@@ -197,7 +241,8 @@ Size := i;]]></ST>
       <LineId Id="24" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Create">
-      <LineId Id="48" Count="4" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="51" Count="1" />
       <LineId Id="60" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Empty">
@@ -220,7 +265,17 @@ Size := i;]]></ST>
       <LineId Id="5" Count="0" />
       <LineId Id="60" Count="1" />
     </LineIds>
+    <LineIds Name="FB_Base_Linked_List.Peek">
+      <LineId Id="17" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="20" Count="2" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
     <LineIds Name="FB_Base_Linked_List.Pop">
+      <LineId Id="19" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="12" Count="0" />
@@ -235,8 +290,14 @@ Size := i;]]></ST>
       <LineId Id="91" Count="0" />
       <LineId Id="89" Count="0" />
       <LineId Id="45" Count="0" />
+      <LineId Id="102" Count="0" />
       <LineId Id="5" Count="0" />
       <LineId Id="90" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Base_Linked_List.Reverse">
+      <LineId Id="22" Count="4" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="13" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Search">
       <LineId Id="5" Count="0" />

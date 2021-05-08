@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="P_Linked_List_Example" Id="{948ebdc2-dc89-43d4-ad11-e22024a999df}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM P_Linked_List_Example
+  <POU Name="P_Singly_Linked_List" Id="{948ebdc2-dc89-43d4-ad11-e22024a999df}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Singly_Linked_List
 VAR
 	nState 			: BYTE;
 	fbLinked_List 	: FB_Base_Linked_List;
@@ -17,6 +17,7 @@ VAR
 	aDelete_Array 	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after deleting element at a position.
 	aInsert_Array	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after inserting element at a position.
 END_VAR
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE nState OF 
@@ -30,6 +31,7 @@ END_VAR
 		fbLinked_List.Create(3);
 		fbLinked_List.Create(4);
 		fbLinked_List.Create(5);
+		fbLinked_List.Reverse();
 		fbLinked_List.Show(aArray);
 		
 		nSize := fbLinked_List.Size();
@@ -38,7 +40,6 @@ END_VAR
 		nState := nState + 1;			
 	
 	2: // Remove an elements from the list, display list and get the list size
-		fbLinked_List.Remove(3);
 		fbLinked_List.Pop();
 		fbLinked_List.Show(aDelete_Array);
 		nDelete_Size := fbLinked_List.Size();
@@ -54,41 +55,21 @@ END_VAR
 		nState := nState + 1;
 		
 	4: // Clear list, then finish.
+		fbLinked_List.Reverse();
 		fbLinked_List.Empty();
 		
 		nState := nState + 1;
 END_CASE]]></ST>
     </Implementation>
-    <LineIds Name="P_Linked_List_Example">
-      <LineId Id="74" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="101" Count="1" />
-      <LineId Id="116" Count="0" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="108" Count="3" />
-      <LineId Id="106" Count="1" />
-      <LineId Id="173" Count="0" />
-      <LineId Id="112" Count="0" />
-      <LineId Id="153" Count="0" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="129" Count="0" />
-      <LineId Id="103" Count="1" />
-      <LineId Id="175" Count="0" />
-      <LineId Id="119" Count="0" />
-      <LineId Id="113" Count="1" />
-      <LineId Id="131" Count="1" />
-      <LineId Id="115" Count="0" />
-      <LineId Id="117" Count="0" />
-      <LineId Id="178" Count="0" />
-      <LineId Id="176" Count="0" />
-      <LineId Id="125" Count="1" />
-      <LineId Id="133" Count="1" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="85" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="8" Count="0" />
+    <LineIds Name="P_Singly_Linked_List">
+      <LineId Id="199" Count="10" />
+      <LineId Id="271" Count="0" />
+      <LineId Id="210" Count="20" />
+      <LineId Id="269" Count="0" />
+      <LineId Id="232" Count="0" />
+      <LineId Id="270" Count="0" />
+      <LineId Id="233" Count="2" />
+      <LineId Id="196" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

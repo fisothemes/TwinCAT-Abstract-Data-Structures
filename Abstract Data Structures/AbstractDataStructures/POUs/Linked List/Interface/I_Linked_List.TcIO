@@ -29,12 +29,13 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Pop" Id="{9598b066-6092-4025-84fe-79e56beda60a}">
-      <Declaration><![CDATA[METHOD Pop
+      <Declaration><![CDATA[METHOD Pop : T_DATA_TYPE
 
 ]]></Declaration>
     </Method>
     <Method Name="Push" Id="{a3cd6a1f-bd78-45e9-8f76-1abc70bac56a}">
-      <Declaration><![CDATA[METHOD Push
+      <Declaration><![CDATA[// Adds/pushes a node at the start of the list 
+METHOD Push
 VAR_INPUT
 		Data 	: T_DATA_TYPE;
 END_VAR
@@ -42,10 +43,15 @@ END_VAR
     </Method>
     <Method Name="Remove" Id="{1bc48630-7261-49e1-8543-62eb12c2b52c}">
       <Declaration><![CDATA[// Deletes node at a specific position in the list
-METHOD Remove
+METHOD Remove : T_DATA_TYPE
 VAR_INPUT
 	nPosition 	: UXINT; // Position of node to delete.
 END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Reverse" Id="{d2b04faf-d1cd-4384-ba97-65ef9e7d26bf}">
+      <Declaration><![CDATA[// Reverse list
+METHOD Reverse
+]]></Declaration>
     </Method>
     <Method Name="Search" Id="{02644848-c4d3-4937-bfda-fcb3bfd64cf9}">
       <Declaration><![CDATA[// Searches list for the first instance of data and returns it's location and whether it's in the list.
