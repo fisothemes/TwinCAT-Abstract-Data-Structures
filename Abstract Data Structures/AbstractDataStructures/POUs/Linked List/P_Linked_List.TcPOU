@@ -7,7 +7,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[P_Singly_Linked_List();
-P_Doubly_Linked_List();]]></ST>
+//P_Doubly_Linked_List();]]></ST>
     </Implementation>
     <LineIds Name="P_Linked_List">
       <LineId Id="5" Count="1" />

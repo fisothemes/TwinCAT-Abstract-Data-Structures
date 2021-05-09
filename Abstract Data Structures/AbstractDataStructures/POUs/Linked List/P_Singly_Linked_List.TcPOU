@@ -16,9 +16,7 @@ VAR
 	aArray 			: ARRAY[1..6] OF T_DATA_TYPE; // Displays created list.
 	aDelete_Array 	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after deleting element at a position.
 	aInsert_Array	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after inserting element at a position.
-END_VAR
-
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE nState OF 
 	0: // Init list.
@@ -40,6 +38,7 @@ END_VAR
 		nState := nState + 1;			
 	
 	2: // Remove an elements from the list, display list and get the list size
+		fbLinked_list.Remove(3);
 		fbLinked_List.Pop();
 		fbLinked_List.Show(aDelete_Array);
 		nDelete_Size := fbLinked_List.Size();
@@ -55,7 +54,6 @@ END_VAR
 		nState := nState + 1;
 		
 	4: // Clear list, then finish.
-		fbLinked_List.Reverse();
 		fbLinked_List.Empty();
 		
 		nState := nState + 1;
@@ -64,11 +62,11 @@ END_CASE]]></ST>
     <LineIds Name="P_Singly_Linked_List">
       <LineId Id="199" Count="10" />
       <LineId Id="271" Count="0" />
-      <LineId Id="210" Count="20" />
+      <LineId Id="210" Count="7" />
+      <LineId Id="289" Count="0" />
+      <LineId Id="218" Count="12" />
       <LineId Id="269" Count="0" />
-      <LineId Id="232" Count="0" />
-      <LineId Id="270" Count="0" />
-      <LineId Id="233" Count="2" />
+      <LineId Id="232" Count="3" />
       <LineId Id="196" Count="0" />
     </LineIds>
   </POU>

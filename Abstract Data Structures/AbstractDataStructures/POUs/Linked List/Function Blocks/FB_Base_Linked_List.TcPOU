@@ -39,7 +39,8 @@ VAR
 	pTemp : POINTER TO ST_NODE;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pTemp := pHead;
+        <ST><![CDATA[pTail := 0;
+pTemp := pHead;
 WHILE pTemp <> 0 DO
 	pTemp := pTemp^.pNext; THIS^.Pop();
 END_WHILE
@@ -161,21 +162,24 @@ __DELETE(pCurrent);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Reverse" Id="{8f33e087-c457-40cd-8db6-ce49ffbb0801}">
-      <Declaration><![CDATA[// Reverse list
+      <Declaration><![CDATA[// Reverses list
 METHOD Reverse
 VAR_INST
-	pPrevious 	: POINTER TO ST_NODE;
-	pCurrent 	: POINTER TO ST_NODE;
-	pTemp 		: POINTER TO ST_NODE;
+	pPrevious 		: POINTER TO ST_NODE;
+	pCurrent 		: POINTER TO ST_NODE;
+	pNext	 		: POINTER TO ST_NODE;
 	i : UXINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[FOR i := 1 TO THIS^.Size() DO
-	pHead^.pNext := pCurrent^.pNext;
+        <ST><![CDATA[pCurrent := pHead;
+pNext := pCurrent;
+WHILE pCurrent <> 0 DO
+	pNext := pNext^.pNext;
 	pCurrent^.pNext := pPrevious;
 	pPrevious := pCurrent;
-	pCurrent := pHead^.pNext; 
-END_FOR
+	pCurrent := pNext;
+END_WHILE
+pHead := pPrevious;
 ]]></ST>
       </Implementation>
     </Method>
@@ -194,11 +198,12 @@ VAR
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pTemp := pHead;
-FOR i := 1 TO THIS^.Size() DO
+WHILE pTemp <> 0 DO
+	i := i + 1;
 	Search := pTemp^.Data = Data;
 	IF Search THEN nPosition := i; EXIT; ELSE nPosition := 0; END_IF
 	pTemp := pTemp^.pNext;
-	END_FOR]]></ST>
+END_WHILE]]></ST>
       </Implementation>
     </Method>
     <Method Name="Show" Id="{44cc05c3-a73a-485e-b7c4-9f46d1a3c88e}">
@@ -214,7 +219,7 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pCurrent := pHead;
 i := LOWER_BOUND(aList, 1);
-WHILE pCurrent <> 0 AND i < UPPER_BOUND(aList, 1) DO
+WHILE pCurrent <> 0 AND i <= UPPER_BOUND(aList, 1) DO
 	aList[i] := pCurrent^.Data;
 	pCurrent := pCurrent^.pNext;
 	i := i+1;
@@ -246,6 +251,7 @@ Size := i;]]></ST>
       <LineId Id="60" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Empty">
+      <LineId Id="56" Count="0" />
       <LineId Id="31" Count="0" />
       <LineId Id="24" Count="0" />
       <LineId Id="42" Count="0" />
@@ -295,15 +301,20 @@ Size := i;]]></ST>
       <LineId Id="90" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Reverse">
-      <LineId Id="22" Count="4" />
-      <LineId Id="20" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="13" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Search">
       <LineId Id="5" Count="0" />
-      <LineId Id="61" Count="1" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="73" Count="1" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="90" Count="2" />
+      <LineId Id="88" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Show">
       <LineId Id="30" Count="5" />

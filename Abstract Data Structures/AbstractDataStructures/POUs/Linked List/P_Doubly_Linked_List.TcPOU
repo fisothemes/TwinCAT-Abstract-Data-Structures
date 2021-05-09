@@ -39,6 +39,7 @@ END_VAR
 		nState := nState + 1;			
 	
 	2: // Remove an elements from the list, display list and get the list size
+		fbLinked_list.Remove(3);
 		fbLinked_List.Pop();
 		fbLinked_List.Show(aDelete_Array);
 		nDelete_Size := fbLinked_List.Size();
@@ -60,7 +61,9 @@ END_VAR
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="P_Doubly_Linked_List">
-      <LineId Id="199" Count="36" />
+      <LineId Id="199" Count="19" />
+      <LineId Id="253" Count="0" />
+      <LineId Id="219" Count="16" />
       <LineId Id="196" Count="0" />
     </LineIds>
   </POU>
