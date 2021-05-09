@@ -29,7 +29,8 @@ END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Pop" Id="{9598b066-6092-4025-84fe-79e56beda60a}">
-      <Declaration><![CDATA[METHOD Pop : T_DATA_TYPE
+      <Declaration><![CDATA[// Deletes/pops a node at the start of the list 
+METHOD Pop : T_DATA_TYPE
 
 ]]></Declaration>
     </Method>

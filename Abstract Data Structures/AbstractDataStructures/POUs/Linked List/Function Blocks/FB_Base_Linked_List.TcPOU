@@ -164,7 +164,7 @@ __DELETE(pCurrent);]]></ST>
     <Method Name="Reverse" Id="{8f33e087-c457-40cd-8db6-ce49ffbb0801}">
       <Declaration><![CDATA[// Reverses list
 METHOD Reverse
-VAR_INST
+VAR
 	pPrevious 		: POINTER TO ST_NODE;
 	pCurrent 		: POINTER TO ST_NODE;
 	pNext	 		: POINTER TO ST_NODE;

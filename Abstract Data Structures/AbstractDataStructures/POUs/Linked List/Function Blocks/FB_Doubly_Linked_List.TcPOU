@@ -45,25 +45,6 @@ END_VAR
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Pop" Id="{57f6bc23-5136-40d5-b964-533e7903d35d}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD Pop : T_DATA_TYPE
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Push" Id="{6bda1aa4-b07a-470f-b437-14107fdbde7f}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD Push
-VAR_INPUT
-	Data	: T_DATA_TYPE;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="Remove" Id="{6e058adb-4972-4a7b-a117-85ef4a2c1908}">
       <Declaration><![CDATA[{warning 'add method implementation '}
 (* Deletes node at a specific position in the list*)
@@ -72,6 +53,14 @@ VAR_INPUT
 	(* Position of node to delete.*)
 	nPosition	: UXINT;
 END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reverse" Id="{7a2b30e9-aeaf-4f17-9887-10f9fb9247f0}">
+      <Declaration><![CDATA[// Reverse list
+METHOD Reverse
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
@@ -104,14 +93,11 @@ END_VAR
     <LineIds Name="FB_Doubly_Linked_List.Insert">
       <LineId Id="11" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Doubly_Linked_List.Pop">
-      <LineId Id="4" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Doubly_Linked_List.Push">
-      <LineId Id="7" Count="0" />
-    </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Remove">
       <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Reverse">
+      <LineId Id="4" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Search">
       <LineId Id="13" Count="0" />
