@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_Linked_List_Stack" Id="{d4140609-20e1-48e0-a928-cefff9aa0e9c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Linked_List_Stack IMPLEMENTS I_Stack
+VAR
+	pHead :  POINTER TO ST_NODE;
+	pTail :  POINTER TO ST_NODE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Empty" Id="{da5d1f98-b334-4e75-9191-37af7c498d5b}">
+      <Declaration><![CDATA[(* Empties/Clears/Deletes all elements on the stack*)
+METHOD Empty
+VAR
+	pTemp : POINTER TO ST_NODE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pTail := 0;
+pTemp := THIS^.pHead;
+WHILE pTemp <> 0 DO
+	pTemp := pTemp^.pNext; THIS^.Pop();
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{96b9d606-2eab-445b-b806-34661ea59804}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	(* if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.Empty();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{15f1cb2f-fb05-44ae-8c15-59d77c6989df}">
+      <Declaration><![CDATA[(* Checks of stack is empty.*)
+METHOD Is_Empty : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Empty := THIS^.pHead = 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{9e3a4625-49c7-47fe-93f6-62b7ba233dc8}">
+      <Declaration><![CDATA[(* Deletes/pops an element at the front of the stack *)
+METHOD Pop : T_DATA_TYPE
+VAR
+	pTemp : POINTER TO ST_NODE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT THIS^.Is_Empty() THEN
+	Pop := THIS^.pHead^.Data;
+	pTemp := THIS^.pHead^.pNext;
+	__DELETE(THIS^.pHead);
+	THIS^.pHead := pTemp;
+	END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{b0106ec0-c492-4dee-b427-ef0e6dc7c35f}">
+      <Declaration><![CDATA[(* Adds/pushes an element to the front of the stack *)
+METHOD Push
+VAR_INPUT
+	Data	: T_DATA_TYPE;
+END_VAR
+VAR
+	pTemp	: POINTER TO ST_NODE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTemp := __NEW(ST_NODE); 	// Allocate space in memory for a node.
+pTemp^.Data := Data;
+pTemp^.pNext := THIS^.pHead;
+THIS^.pHead := pTemp;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{a420e4b7-ee62-432d-82f0-0d174f79e265}">
+      <Declaration><![CDATA[(* Traverse the stack and display each element as an array. *)
+METHOD Show
+VAR_IN_OUT
+	aList : ARRAY[*] OF T_DATA_TYPE; // Array to display data in stack.
+END_VAR
+VAR
+	pCurrent 	:  POINTER TO ST_NODE;
+	i 			: DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pCurrent := THIS^.pHead;
+i := LOWER_BOUND(aList, 1);
+WHILE pCurrent <> 0 AND i <= UPPER_BOUND(aList, 1) DO
+	aList[i] := pCurrent^.Data;
+	pCurrent := pCurrent^.pNext;
+	i := i+1;
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Size" Id="{9da797e3-9eba-49f3-acd1-f2acb121762a}">
+      <Declaration><![CDATA[(* Gets size of the stack*)
+METHOD Size : UXINT
+VAR
+	pTemp 	: POINTER TO ST_NODE;
+	i 		: UXINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTemp := THIS^.pHead;
+WHILE pTemp <> 0 DO
+	pTemp := pTemp^.pNext; i := i + 1;;
+END_WHILE
+Size := i;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Top" Id="{d528a193-e8e1-499c-84ae-e67254cf5b6b}">
+      <Declaration><![CDATA[(* Reads and returns the data at the top of the stack*)
+METHOD Top : T_DATA_TYPE
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.Is_Empty() THEN Top := 0; ELSE Top := THIS^.pHead^.Data; END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Linked_List_Stack">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Empty">
+      <LineId Id="6" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.FB_exit">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Is_Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Pop">
+      <LineId Id="13" Count="0" />
+      <LineId Id="16" Count="2" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Push">
+      <LineId Id="9" Count="2" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Show">
+      <LineId Id="21" Count="5" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Size">
+      <LineId Id="9" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Stack.Top">
+      <LineId Id="7" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

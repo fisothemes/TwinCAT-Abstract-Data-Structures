@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_Linked_List_Stack" Id="{bc15bfd2-db23-4fc0-ad53-e7306e13d704}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Linked_List_Stack
+VAR
+	nState 	: BYTE;
+	fbStack : FB_Linked_List_Stack;
+	
+	
+	// Init
+	bInit_Is_Empty 	: BOOL;
+	nInit_Size 		: ULINT;
+	Init_Top 		: T_DATA_TYPE;
+	aInit_Stack 	: ARRAY[1..6] OF T_DATA_TYPE;
+	
+	// Pust element to stack
+	bPush_Is_Empty 	: BOOL;
+	nPush_Size 		: ULINT;
+	Push_Top 		: T_DATA_TYPE;
+	aPush_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
+	
+	// Pop element from stack
+	bPop_Is_Empty 	: BOOL;
+	nPop_Size 		: ULINT;
+	Pop_Top 		: T_DATA_TYPE;
+	aPop_Stack 		: ARRAY[1..6] OF T_DATA_TYPE; 
+	
+	// Empty Stack
+	bEmpty_Is_Empty : BOOL;
+	nEmpty_Size 	: ULINT;
+	Empty_Top 		: T_DATA_TYPE;
+	aEmpty_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nState OF
+	0: // Init
+		bInit_Is_Empty := fbStack.Is_Empty();
+		nInit_Size :=  fbStack.Size();
+		Init_Top := fbStack.Top();
+		fbStack.Show(aInit_Stack);
+		
+		nState := nState + 1;
+		
+	1: // Push Element to tack
+		fbStack.Push(1);
+		fbStack.Push(2);
+		fbStack.Push(3);
+		fbStack.Push(4);
+		fbStack.Push(5);
+		bPush_Is_Empty := fbStack.Is_Empty();
+		nPush_Size := fbStack.Size();
+		Push_Top := fbStack.Top();
+		fbStack.Show(aPush_Stack);
+		
+		nState := nState + 1;
+	
+	2: // Pop elements from stack
+		fbStack.Pop();
+		fbStack.Pop();
+		bPop_Is_Empty := fbStack.Is_Empty();
+		nPop_Size := fbStack.Size();
+		Pop_Top := fbStack.Top();
+		fbStack.Show(aPop_Stack);
+		
+		nState := nState + 1;
+		
+	3: // Empty stack
+		fbStack.Empty();
+		bEmpty_Is_Empty := fbStack.Is_Empty();
+		nEmpty_Size := fbStack.Size();
+		Empty_Top := fbStack.Top();
+		fbStack.Show(aEmpty_Stack);
+		
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="P_Linked_List_Stack">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="41" Count="1" />
+      <LineId Id="72" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="43" Count="1" />
+      <LineId Id="50" Count="1" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="52" Count="5" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="64" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

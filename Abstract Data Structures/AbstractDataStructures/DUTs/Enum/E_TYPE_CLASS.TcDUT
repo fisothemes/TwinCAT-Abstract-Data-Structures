@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <DUT Name="E_TYPE_CLASS" Id="{97a6b245-2e73-4bb1-97b6-2cbd41c998af}">
+    <Declaration><![CDATA[// List of __SYSTEM.TYPE_CLASS.<type> used for reference
+//{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_TYPE_CLASS :
+(
+	TYPE_BOOL 			:= DWORD#0,
+    TYPE_BIT 			:= DWORD#1,
+    TYPE_BYTE 			:= DWORD#2,
+    TYPE_WORD 			:= DWORD#3,
+    TYPE_DWORD 			:= DWORD#4,
+    TYPE_LWORD 			:= DWORD#5,
+    TYPE_SINT 			:= DWORD#6,
+    TYPE_INT 			:= DWORD#7,
+    TYPE_DINT 			:= DWORD#8,
+    TYPE_LINT 			:= DWORD#9,
+    TYPE_USINT 			:= DWORD#10,
+    TYPE_UINT 			:= DWORD#11,
+    TYPE_UDINT 			:= DWORD#12,
+    TYPE_ULINT 			:= DWORD#13,
+    TYPE_REAL 			:= DWORD#14,
+    TYPE_LREAL 			:= DWORD#15,
+    TYPE_STRING 		:= DWORD#16,
+    TYPE_WSTRING 		:= DWORD#17,
+    TYPE_TIME 			:= DWORD#18,
+    TYPE_DATE 			:= DWORD#19,
+    TYPE_DATEANDTIME 	:= DWORD#20,
+    TYPE_TIMEOFDAY 		:= DWORD#21,
+    TYPE_POINTER 		:= DWORD#22,
+    TYPE_REFERENCE 		:= DWORD#23,
+    TYPE_SUBRANGE 		:= DWORD#24,
+    TYPE_ENUM 			:= DWORD#25,
+    TYPE_ARRAY 			:= DWORD#26,
+    TYPE_PARAMS 		:= DWORD#27,
+    TYPE_USERDEF 		:= DWORD#28,
+    TYPE_NONE 			:= DWORD#29,
+    TYPE_ANY 			:= DWORD#30,
+    TYPE_ANYBIT 		:= DWORD#31,
+    TYPE_ANYDATE 		:= DWORD#32,
+    TYPE_ANYINT 		:= DWORD#33,
+    TYPE_ANYNUM 		:= DWORD#34,
+    TYPE_ANYREAL 		:= DWORD#35,
+    TYPE_LAZY 			:= DWORD#36,
+    TYPE_LTIME 			:= DWORD#37,
+    TYPE_BITCONST 		:= DWORD#38
+)DWORD;
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

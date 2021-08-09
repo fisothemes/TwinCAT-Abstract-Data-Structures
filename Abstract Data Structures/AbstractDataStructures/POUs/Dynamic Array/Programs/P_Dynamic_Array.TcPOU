@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_Dynamic_Array" Id="{d06857f7-d5cb-4d94-a54f-fd27b806a113}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Dynamic_Array
+VAR
+	bInsert,bAdd, bResize : BOOL;
+	nDyn_Size 	: UDINT;
+	aArray 		: ARRAY[0..30] OF T_DATA_TYPE;
+	t_Access 	: T_DATA_TYPE;  
+	fbDyn_Array : FB_Dynamic_Array;
+	i : DINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[nDyn_Size := fbDyn_Array.Size();
+fbDyn_Array.Insert(53476,0);
+t_Access := fbDyn_Array.Access(2);
+fbDyn_Array.Show(aArray);
+
+IF bInsert THEN 
+	FOR i := 1 TO 9 DO fbDyn_Array.Insert(TO_ULINT(i*11),TO_UDINT(i)); END_FOR
+	bInsert := 0;
+	END_IF
+IF bAdd THEN fbDyn_Array.Insert(33,10); bAdd := 0; END_IF
+IF bResize THEN fbDyn_Array.Resize(5); bResize := 0; END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="P_Dynamic_Array">
+      <LineId Id="5" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="33" Count="1" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="32" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

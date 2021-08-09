@@ -47,6 +47,16 @@ END_WHILE
 ]]></ST>
       </Implementation>
     </Method>
+    <Method Name="FB_exit" Id="{dec8d376-54cb-4f56-bfaa-2f7c959c146d}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Empty();]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Init" Id="{d3845c5b-4488-4a2a-83ef-21fe8d01c1da}">
       <Declaration><![CDATA[// Initializes or create an empty list
 METHOD Init
@@ -257,6 +267,9 @@ Size := i;]]></ST>
       <LineId Id="42" Count="0" />
       <LineId Id="22" Count="0" />
       <LineId Id="51" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Base_Linked_List.FB_exit">
+      <LineId Id="6" Count="0" />
     </LineIds>
     <LineIds Name="FB_Base_Linked_List.Init">
       <LineId Id="6" Count="0" />

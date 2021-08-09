@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_Dynamic_Array_Stack" Id="{6794da22-5d0c-48e6-b3a8-88d57cbb32b9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Dynamic_Array_Stack IMPLEMENTS I_Stack
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	fbDynamic_Array : FB_Dynamic_Array;
+	pData 			: POINTER TO T_DATA_TYPE; 
+	t_Top 			: T_DATA_TYPE;
+	nIndex, nSize 	: UXINT; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Empty" Id="{5cda3cfa-5ce8-42a1-bbd8-9978abcb4d19}">
+      <Declaration><![CDATA[(* Empties/Clears/Deletes all elements on the stack*)
+METHOD Empty
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.pData <> 0 THEN __DELETE(THIS^.pData); END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{d0d73d6a-358d-4641-86fa-f3291f831948}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	(* if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[__DELETE(This^.pData);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{f6464c1a-f451-40be-950f-c68f89b61c94}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.pData := __NEW(T_DATA_TYPE);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{7d9c58bf-ca63-4b74-bde5-5252024cbbda}">
+      <Declaration><![CDATA[(* Checks of stack is empty.*)
+METHOD Is_Empty : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Empty := THIS^.nSize = 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{bbedc7b5-0295-4ee8-ac30-b3b8281ee07b}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Pop : T_DATA_TYPE
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.Size() <> 0 THEN 
+	THIS^.nIndex := THIS^.nIndex - 1;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{1192dd04-d4fd-4b27-af4d-9615dea0bc87}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Push
+VAR_INPUT
+	Data	: T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{4fb0df02-3ae9-4af9-9983-b8822a8b4e2e}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD Show
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Size" Id="{d47e6a3a-c8b2-46df-b8a8-3cd43473e977}">
+      <Declaration><![CDATA[(* Gets size of the stack*)
+METHOD Size : UXINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Size := THIS^.nSize;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Top" Id="{1c2eb79f-614a-4189-ab62-5de702832c6d}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+(* Reads and returns the data at the top of the stack*)
+METHOD Top : T_DATA_TYPE
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Top := THIS^.t_Top;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Dynamic_Array_Stack">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.FB_exit">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Is_Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Pop">
+      <LineId Id="4" Count="0" />
+      <LineId Id="7" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Push">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Show">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Size">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Stack.Top">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

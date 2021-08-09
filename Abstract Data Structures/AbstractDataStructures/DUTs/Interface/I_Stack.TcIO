@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <Itf Name="I_Stack" Id="{c50f7df6-c506-4372-8a8b-e7ab6cd3d8ab}">
+    <Declaration><![CDATA[INTERFACE I_Stack
+]]></Declaration>
+    <Method Name="Empty" Id="{4f9032a1-58fa-424c-b444-ee582137b048}">
+      <Declaration><![CDATA[// Empties/Clears/Deletes all elements on the stack
+METHOD Empty]]></Declaration>
+    </Method>
+    <Method Name="FB_exit" Id="{b3b12f2a-ada4-4186-afb4-429eac86782c}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Is_Empty" Id="{18aca07f-d268-43c5-8bf8-6c48ccc870f8}">
+      <Declaration><![CDATA[// Checks of stack is empty.
+METHOD Is_Empty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Pop" Id="{769bed8c-c6d9-43cf-8321-78ef656287a3}">
+      <Declaration><![CDATA[// Deletes/pops an element at the front of the stack 
+METHOD Pop : T_DATA_TYPE]]></Declaration>
+    </Method>
+    <Method Name="Push" Id="{aa60416d-1145-47ce-b000-a59b8c886bf0}">
+      <Declaration><![CDATA[// Adds/pushes an element to the front of the stack 
+METHOD Push
+VAR_INPUT
+	Data 	: T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Show" Id="{61f80d8a-c9df-4aae-85a5-186825f943c9}">
+      <Declaration><![CDATA[// Traverse the stack and display each element as an array
+METHOD Show
+VAR_IN_OUT
+	aList 		: ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Size" Id="{73f0608e-7284-41f1-8cbf-6d068b08c189}">
+      <Declaration><![CDATA[// Gets size of the stack
+METHOD Size : UXINT;
+]]></Declaration>
+    </Method>
+    <Method Name="Top" Id="{d9ed4e7e-5773-4004-bb94-0ca3e3064a3a}">
+      <Declaration><![CDATA[// Reads and returns the data at the top of the stack
+METHOD Top : T_DATA_TYPE
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

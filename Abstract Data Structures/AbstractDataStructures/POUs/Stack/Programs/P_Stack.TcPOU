@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_Stack" Id="{6d895120-20ec-4ebe-b215-006e9cde9ef5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Stack
+VAR
+	
+	bCreate,bPush, bPop, bDelete : BOOL;
+	pData : POINTER TO T_DATA_TYPE;
+	pPush_Addr, pPop_Addr : POINTER TO T_DATA_TYPE;
+	nTop : T_DATA_TYPE; 
+	nIndex : ULINT;
+	nSize : UDINT; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[P_Dynamic_Array_Stack();
+P_Linked_List_Stack();
+
+
+IF bCreate AND (pData = 0) THEN 
+	nSize := SIZEOF(T_DATA_TYPE)*10;
+	pData := __NEW(T_DATA_TYPE,nSize);
+	bCreate := FALSE;
+	END_IF
+
+IF bPush THEN 
+	pData[nIndex] := nIndex + 10;
+	nTop := pData[nIndex];
+	pPush_Addr := ADR(pData[nIndex]);
+	nIndex := nIndex + 1;
+	bPush := FALSE;
+	END_IF
+
+IF bPop AND (nIndex > 0) THEN 
+	nIndex := nIndex - 1;
+	nTop := pData[nIndex];
+	pPop_Addr := ADR(pData[nIndex]);
+	bPop := FALSE;
+	END_IF
+	
+IF bDelete THEN 
+	__DELETE(pData);
+	bDelete := FALSE;
+	END_IF
+]]></ST>
+    </Implementation>
+    <LineIds Name="P_Stack">
+      <LineId Id="5" Count="1" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
