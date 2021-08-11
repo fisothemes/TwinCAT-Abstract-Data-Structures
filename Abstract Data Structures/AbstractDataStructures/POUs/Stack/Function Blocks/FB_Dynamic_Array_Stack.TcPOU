@@ -20,7 +20,8 @@ END_VAR
 METHOD Empty
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.fbDynamic_Array.Clear();]]></ST>
+        <ST><![CDATA[THIS^.fbDynamic_Array.Clear(); 
+THIS^.nSize := THIS^.fbDynamic_Array.Size();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_exit" Id="{d0d73d6a-358d-4641-86fa-f3291f831948}">
@@ -50,26 +51,27 @@ END_VAR
 METHOD Is_Empty : BOOL
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Is_Empty := THIS^.fbDynamic_Array.Size() = 0;]]></ST>
+        <ST><![CDATA[Is_Empty := nSize = 0;
+IF Is_Empty THEN THIS^.Empty(); END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Pop" Id="{bbedc7b5-0295-4ee8-ac30-b3b8281ee07b}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD Pop : T_DATA_TYPE
+      <Declaration><![CDATA[METHOD Pop : T_DATA_TYPE
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[Pop := THIS^.fbDynamic_Array.Access(THIS^.Size() - 1);
+IF NOT(THIS^.Is_Empty()) THEN nSize := THIS^.Size() - 1; END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Push" Id="{1192dd04-d4fd-4b27-af4d-9615dea0bc87}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-METHOD Push
+      <Declaration><![CDATA[METHOD Push
 VAR_INPUT
 	Data	: T_DATA_TYPE;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.fbDynamic_Array.Insert(Data, THIS^.Size());]]></ST>
+        <ST><![CDATA[nSize := THIS^.Size() + 1;
+THIS^.fbDynamic_Array.Insert(Data, THIS^.Size()-1);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Show" Id="{4fb0df02-3ae9-4af9-9983-b8822a8b4e2e}">
@@ -77,9 +79,20 @@ END_VAR
 METHOD Show
 VAR_IN_OUT
 	aList : ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+VAR
+	i,j : DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[THIS^.fbDynamic_Array.Show(aList);]]></ST>
+        <ST><![CDATA[FOR i := LOWER_BOUND(aList, 1) TO UPPER_BOUND(aList, 1) DO
+	IF j < TO_DINT(THIS^.Size()) AND NOT(THIS^.Is_Empty())THEN 
+		aList[i] := THIS^.fbDynamic_Array.Access((THIS^.Size()-1) - TO_UDINT(j));
+		j := j + 1;
+	ELSE 
+		aList[i] := 0; 
+		END_IF
+	END_FOR
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Size" Id="{d47e6a3a-c8b2-46df-b8a8-3cd43473e977}">
@@ -87,7 +100,7 @@ END_VAR]]></Declaration>
 METHOD Size : UDINT
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF NOT(THIS^.Is_Empty())THEN Size := THIS^.nSize; ELSE Size := 0; END_IF]]></ST>
+        <ST><![CDATA[IF NOT(THIS^.Is_Empty())THEN Size := THIS^.nSize; END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Top" Id="{1c2eb79f-614a-4189-ab62-5de702832c6d}">
@@ -95,7 +108,7 @@ METHOD Size : UDINT
 METHOD Top : T_DATA_TYPE
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Top := THIS^.fbDynamic_Array.Access(THIS^.nTop_Index);]]></ST>
+        <ST><![CDATA[IF NOT(THIS^.Is_Empty()) THEN Top := THIS^.fbDynamic_Array.Access(THIS^.nSize-1); END_IF]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Dynamic_Array_Stack">
@@ -103,6 +116,7 @@ METHOD Top : T_DATA_TYPE
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.Empty">
       <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.FB_exit">
       <LineId Id="8" Count="0" />
@@ -112,14 +126,22 @@ METHOD Top : T_DATA_TYPE
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.Is_Empty">
       <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.Pop">
+      <LineId Id="12" Count="0" />
       <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.Push">
+      <LineId Id="13" Count="0" />
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.Show">
+      <LineId Id="10" Count="0" />
+      <LineId Id="16" Count="2" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="15" Count="0" />
       <LineId Id="4" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array_Stack.Size">

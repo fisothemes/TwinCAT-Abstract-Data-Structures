@@ -36,7 +36,7 @@ Access := THIS^.pData[nPosition];
       </Implementation>
     </Method>
     <Method Name="Clear" Id="{61bd7724-e2ea-4bde-b7bd-c41ffb9830f3}">
-      <Declaration><![CDATA[(* Clears elements in array and resizing it to 1. *)
+      <Declaration><![CDATA[(* Deletes array from memory. *)
 METHOD Clear
 VAR_INPUT
 END_VAR
