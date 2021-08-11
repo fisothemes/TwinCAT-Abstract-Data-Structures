@@ -43,7 +43,7 @@ END_VAR
     </Method>
     <Method Name="Size" Id="{73f0608e-7284-41f1-8cbf-6d068b08c189}">
       <Declaration><![CDATA[// Gets size of the stack
-METHOD Size : UXINT;
+METHOD Size : UDINT;
 ]]></Declaration>
     </Method>
     <Method Name="Top" Id="{d9ed4e7e-5773-4004-bb94-0ca3e3064a3a}">

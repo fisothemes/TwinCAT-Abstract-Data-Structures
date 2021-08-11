@@ -2,7 +2,7 @@
 <TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4024.10">
 	<Project ProjectGUID="{75CFDF66-BD5C-42A7-8312-8B6F49BC8709}" Target64Bit="true" ShowHideConfigurations="#x306">
 		<System>
-			<Settings MaxCpus="12">
+			<Settings MaxCpus="12" NonWinCpus="1">
 				<Cpu CpuId="11"/>
 			</Settings>
 			<Tasks>

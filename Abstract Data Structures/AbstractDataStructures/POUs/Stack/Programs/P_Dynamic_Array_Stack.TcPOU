@@ -3,6 +3,33 @@
   <POU Name="P_Dynamic_Array_Stack" Id="{6b9b5030-a2e0-4bd0-b12b-f3711ab4b7fc}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P_Dynamic_Array_Stack
 VAR
+	nState 	: BYTE;
+	fbStack : FB_Dynamic_Array_Stack;
+	
+	
+	// Init
+	bInit_Is_Empty 	: BOOL;
+	nInit_Size 		: ULINT;
+	Init_Top 		: T_DATA_TYPE;
+	aInit_Stack 	: ARRAY[1..6] OF T_DATA_TYPE;
+	
+	// Pust element to stack
+	bPush_Is_Empty 	: BOOL;
+	nPush_Size 		: ULINT;
+	Push_Top 		: T_DATA_TYPE;
+	aPush_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
+	
+	// Pop element from stack
+	bPop_Is_Empty 	: BOOL;
+	nPop_Size 		: ULINT;
+	Pop_Top 		: T_DATA_TYPE;
+	aPop_Stack 		: ARRAY[1..6] OF T_DATA_TYPE; 
+	
+	// Empty Stack
+	bEmpty_Is_Empty : BOOL;
+	nEmpty_Size 	: ULINT;
+	Empty_Top 		: T_DATA_TYPE;
+	aEmpty_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
 END_VAR
 ]]></Declaration>
     <Implementation>

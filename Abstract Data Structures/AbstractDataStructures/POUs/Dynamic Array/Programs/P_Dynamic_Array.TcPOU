@@ -3,38 +3,43 @@
   <POU Name="P_Dynamic_Array" Id="{d06857f7-d5cb-4d94-a54f-fd27b806a113}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM P_Dynamic_Array
 VAR
-	bInsert,bAdd, bResize : BOOL;
+	bIs_Empty, bInsert, bAdd, bAccess, bResize, bClear : BOOL;
 	nDyn_Size 	: UDINT;
 	aArray 		: ARRAY[0..30] OF T_DATA_TYPE;
 	t_Access 	: T_DATA_TYPE;  
-	fbDyn_Array : FB_Dynamic_Array;
+	fbDyn_Array : FB_Dynamic_Array(10);
 	i : DINT;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[nDyn_Size := fbDyn_Array.Size();
-fbDyn_Array.Insert(53476,0);
-t_Access := fbDyn_Array.Access(2);
+      <ST><![CDATA[bIs_Empty := fbDyn_Array.Is_Empty();
+nDyn_Size := fbDyn_Array.Size();
 fbDyn_Array.Show(aArray);
 
-IF bInsert THEN 
+IF bInsert THEN
+	fbDyn_Array.Insert(53476,0); 
 	FOR i := 1 TO 9 DO fbDyn_Array.Insert(TO_ULINT(i*11),TO_UDINT(i)); END_FOR
 	bInsert := 0;
 	END_IF
-IF bAdd THEN fbDyn_Array.Insert(33,10); bAdd := 0; END_IF
-IF bResize THEN fbDyn_Array.Resize(5); bResize := 0; END_IF]]></ST>
+IF bAdd 	THEN fbDyn_Array.Insert(33,10); 		bAdd 	:= 0; END_IF
+IF bAccess 	THEN t_Access := fbDyn_Array.Access(2); bAccess := 0; END_IF
+IF bResize 	THEN fbDyn_Array.Resize(5); 			bResize := 0; END_IF
+IF bClear 	THEN fbDyn_Array.Clear(); 				bClear 	:= 0; END_IF]]></ST>
     </Implementation>
     <LineIds Name="P_Dynamic_Array">
+      <LineId Id="60" Count="0" />
       <LineId Id="5" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="41" Count="0" />
       <LineId Id="40" Count="0" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="33" Count="1" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="34" Count="0" />
       <LineId Id="44" Count="0" />
       <LineId Id="35" Count="0" />
       <LineId Id="20" Count="0" />
+      <LineId Id="58" Count="0" />
       <LineId Id="32" Count="0" />
+      <LineId Id="54" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>
