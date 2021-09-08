@@ -1,44 +1,132 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <POU Name="FB_Doubly_Linked_List" Id="{03f6cb54-b49e-4d08-867b-b49ddd590b59}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Doubly_Linked_List EXTENDS FB_Base_Linked_List IMPLEMENTS I_Linked_List
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Doubly_Linked_List IMPLEMENTS I_Linked_List
 VAR
+	pHead :  POINTER TO ST_NODE;
+	pTail :  POINTER TO ST_NODE;
+	t_Null: T_DATA_TYPE;
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
     <Method Name="Create" Id="{6e81400d-b895-4d17-b1a0-7da2503c1458}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-(* Creates/Adds an node to the end of the list*)
+      <Declaration><![CDATA[(* Creates/Adds an node to the end of the list. *)
 METHOD Create
 VAR_INPUT
 	(* Data to add to new node.*)
-	Data	: T_DATA_TYPE;
+	Data		: T_DATA_TYPE;
 END_VAR
 VAR
-	pTemp :  POINTER TO ST_NODE;
+	pTemp 		:  POINTER TO ST_NODE; //  New node will be allocated at this pointer
+	pPrevious 	: POINTER TO ST_NODE; // Previous node location will be stored at this pointer temporarily
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pTemp := pTail;
-SUPER^.Create(Data);
-IF SUPER^.pHead^.pNext <> 0 THEN SUPER^.pTail^.pPrevious := pTemp; END_IF]]></ST>
+        <ST><![CDATA[pTemp := __NEW(ST_NODE);
+pTemp^.Data := Data;
+IF THIS^.pHead = 0 THEN 
+	THIS^.pHead := pTemp; 
+	THIS^.pTail := THIS^.pHead; // If the pointer to the pHead is NULL then give it an address. The pTail address of the first node is the pHead.
+ELSE
+	pPrevious := THIS^.pTail;
+	THIS^.pTail^.pNext := pTemp; 
+	THIS^.pTail := pTemp;
+	THIS^.pTail^.pPrevious := pPrevious; 
+	END_IF // Point previous node's pNext to the address of pTemp and set pTail to pTemp.]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Empty" Id="{13f871b3-e858-4291-a8b3-2f75777917f4}">
+      <Declaration><![CDATA[(* Empties/Clears/Deletes list*)
+METHOD Empty
+VAR
+	pTemp : POINTER TO ST_NODE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pTail := 0;
+pTemp := pHead;
+WHILE pTemp <> 0 DO
+	pTemp := pTemp^.pNext; THIS^.Pop();
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{941d640c-d7b3-4d27-8004-bad3bfec5e67}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	(* if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[This^.Empty();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{068ef67d-337f-4431-90f7-195c921196d4}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	(* if TRUE, the retain variables are initialized (warm start / cold start)*)
+	bInitRetains	: BOOL;
+	(* if TRUE, the instance afterwards gets moved into the copy code (online change)*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Method Name="Insert" Id="{a2deca27-6648-4030-8273-4c1592694cd7}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-(* Inserts node at a specific position in the list*)
+      <Declaration><![CDATA[(* Inserts node at a specific position in the list*)
 METHOD Insert
 VAR_INPUT
 	(* Data to add to new node.*)
 	Data	: T_DATA_TYPE;
 	(* Position to add new node in list.*)
-	nPosition	: UXINT;
+	nPosition	: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{7916821b-b988-42e5-9364-676420ec6aa8}">
+      <Declaration><![CDATA[(* Checks of list is empty.*)
+METHOD Is_Empty : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Peek" Id="{1abc0c76-03e0-4d2b-aeef-61f5be63a525}">
+      <Declaration><![CDATA[(* Gets element at any position of the list, wuthout removing it.*)
+METHOD Peek : T_DATA_TYPE
+VAR_INPUT
+	nPosition	: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Pop" Id="{9494d023-f6c0-4f2d-a8f8-1220fb5899b4}">
+      <Declaration><![CDATA[(* Deletes/pops a node at the front of the list *)
+METHOD Pop : T_DATA_TYPE
+VAR
+	pTemp : POINTER TO ST_NODE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.pHead = 0 THEN RETURN; END_IF 
+Pop := pHead^.Data;
+pTemp := pHead^.pNext;
+__DELETE(pHead);
+pHead := pTemp;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Push" Id="{df0359e8-209b-4c98-944c-e2caa380bbd6}">
+      <Declaration><![CDATA[(* Adds/pushes a node at the front of the list *)
+METHOD Push
+VAR_INPUT
+	Data	: T_DATA_TYPE;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -46,20 +134,19 @@ END_VAR
       </Implementation>
     </Method>
     <Method Name="Remove" Id="{6e058adb-4972-4a7b-a117-85ef4a2c1908}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
-(* Deletes node at a specific position in the list*)
+      <Declaration><![CDATA[(* Deletes node at a specific position in the list*)
 METHOD Remove : T_DATA_TYPE
 VAR_INPUT
 	(* Position of node to delete.*)
-	nPosition	: UXINT;
+	nPosition	: DINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Reverse" Id="{7a2b30e9-aeaf-4f17-9887-10f9fb9247f0}">
-      <Declaration><![CDATA[// Reverse list
+    <Method Name="Reverse" Id="{62dd27d4-3e49-4101-aef8-53ee263ebe87}">
+      <Declaration><![CDATA[(* Reverse list*)
 METHOD Reverse
 ]]></Declaration>
       <Implementation>
@@ -67,7 +154,7 @@ METHOD Reverse
       </Implementation>
     </Method>
     <Method Name="Search" Id="{c1b15b75-1452-4c17-83dd-a4eb41b967d7}">
-      <Declaration><![CDATA[{warning 'add method implementation '}
+      <Declaration><![CDATA[//{warning 'add method implementation '}
 (* Searches list for the first instance of data and returns it's location and whether it's in the list.*)
 METHOD Search : BOOL
 VAR_INPUT
@@ -76,8 +163,31 @@ VAR_INPUT
 END_VAR
 VAR_OUTPUT
 	(* Location of the data  starting from 1. 0 means data is not found in list*)
-	nPosition	: UXINT;
+	nPosition	: DINT;
 END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{38cfe029-c78d-4d3d-a50d-75c428b2b275}">
+      <Declaration><![CDATA[(* Traverse the list to display each node. *)
+METHOD Show
+VAR_IN_OUT
+	aList 		: ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+VAR
+	pCurrent 	: POINTER TO ST_NODE;
+	i 			: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Size" Id="{3a7822bb-5a82-43d8-9eae-6b968a22a256}">
+      <Declaration><![CDATA[(* Gets size of the list*)
+METHOD Size : DINT
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>
@@ -87,20 +197,54 @@ END_VAR
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Create">
-      <LineId Id="34" Count="1" />
-      <LineId Id="32" Count="0" />
+      <LineId Id="54" Count="2" />
+      <LineId Id="72" Count="1" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="74" Count="0" />
+      <LineId Id="66" Count="1" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="68" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Empty">
+      <LineId Id="8" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.FB_exit">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.FB_init">
+      <LineId Id="10" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Insert">
       <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Is_Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Peek">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Pop">
+      <LineId Id="8" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Push">
+      <LineId Id="8" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Remove">
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Reverse">
-      <LineId Id="4" Count="0" />
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Doubly_Linked_List.Search">
       <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Show">
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Doubly_Linked_List.Size">
+      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

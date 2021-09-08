@@ -5,65 +5,61 @@
 VAR
 	nState 			: BYTE;
 	fbLinked_List 	: FB_Doubly_Linked_List;
+	Peek 			: T_DATA_TYPE;
 	
 	bFound 			: BOOL;		// Is data in the created list?
-	nPosition 		: ULINT;	// At what position is the data on the list? 0 means no data found. Head mode is 1.
+	nPosition 		: DINT;	// At what position is the data on the list? 0 means no data found. Head mode is 1.
 	
-	nSize 			: ULINT; 	// Dispays size of list after it's created
-	nDelete_Size 	: ULINT; 	// Displays size of list after deleting an element.
-	nInsert_Size 	: ULINT; 	// Displays size of list after inserting an element.
+	nSize 			: DINT; 	// Dispays size of list after it's created
+	nDelete_Size 	: DINT; 	// Displays size of list after deleting an element.
+	nInsert_Size 	: DINT; 	// Displays size of list after inserting an element.
 	
 	aArray 			: ARRAY[1..6] OF T_DATA_TYPE; // Displays created list.
 	aDelete_Array 	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after deleting element at a position.
 	aInsert_Array	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after inserting element at a position.
 END_VAR
 
+
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE nState OF 
-	0: // Init list.
-		fbLinked_List.Init();
-		nState := nState + 1;
-		
-	1: // Create list, display list, get list size and find an item in the list.
+	0: // Create list, display list, get list size and find an item in the list.
 		fbLinked_List.Create(1);
 		fbLinked_List.Create(2);
 		fbLinked_List.Create(3);
 		fbLinked_List.Create(4);
 		fbLinked_List.Create(5);
 		fbLinked_List.Show(aArray);
-		
+		Peek := fbLinked_List.Peek(1);
 		nSize := fbLinked_List.Size();
 		bFound := fbLinked_List.Search(Data := 5, nPosition => nPosition);
 
 		nState := nState + 1;			
 	
-	2: // Remove an elements from the list, display list and get the list size
+	1: // Remove an elements from the list, display list and get the list size
 		fbLinked_list.Remove(3);
 		fbLinked_List.Pop();
 		fbLinked_List.Show(aDelete_Array);
 		nDelete_Size := fbLinked_List.Size();
-		
+	
 		nState := nState + 1;
 	
-	3: // Insert elements into list, display it and the list size
+	2: // Insert elements into list, display it and the list size
 		fbLinked_List.Push(11);
-		fbLinked_List.Insert(13,3);
+		fbLinked_List.Insert(14,3);
 		fbLinked_List.Show(aInsert_Array);
 		nInsert_Size := fbLinked_List.Size();
 		
 		nState := nState + 1;
 		
-	4: // Clear list, then finish.
+	3: // Clear list, then finish.
 		fbLinked_List.Empty();
 		
 		nState := nState + 1;
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="P_Doubly_Linked_List">
-      <LineId Id="199" Count="19" />
-      <LineId Id="253" Count="0" />
-      <LineId Id="219" Count="16" />
+      <LineId Id="285" Count="33" />
       <LineId Id="196" Count="0" />
     </LineIds>
   </POU>

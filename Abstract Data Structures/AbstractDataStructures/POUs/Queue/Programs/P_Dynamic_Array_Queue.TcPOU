@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_Dynamic_Array_Queue" Id="{64f1b309-39a8-4165-b1be-a594adf42779}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM P_Dynamic_Array_Queue
+VAR
+	nState 	: BYTE;
+	fbQueue : FB_Dynamic_Array_Queue;
+	
+	bInit_Is_Empty 		: BOOL;
+	nInit_Size 			: DINT;
+	Init_Peek 			: T_DATA_TYPE;
+	aInit_Show 			: ARRAY[1..6] OF T_DATA_TYPE;
+	
+	bEnqueue_Is_Empty 	: BOOL;
+	nEnqueue_Size 		: DINT;
+	Enqueue_Peek 		: T_DATA_TYPE;
+	aEnqueue_Show 		: ARRAY[1..6] OF T_DATA_TYPE;
+	
+	bDequeue_Is_Empty 	: BOOL;
+	nDequeue_Size 		: DINT;
+	Dequeue_Peek 		: T_DATA_TYPE;
+	aDequeue_Show 		: ARRAY[1..6] OF T_DATA_TYPE;
+	
+	bEmpty_Is_Empty 	: BOOL;
+	nEmpty_Size 		: DINT;
+	Empty_Peek 			: T_DATA_TYPE;
+	aEmpty_Show 		: ARRAY[1..6] OF T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE nState OF
+	0: // Init
+		bInit_Is_Empty := fbQueue.Is_Empty();
+		nInit_Size :=  fbQueue.Size();
+		Init_Peek := fbQueue.Peek(0);
+		fbQueue.Show(aInit_Show);
+		
+		nState := nState + 1;
+		
+	1: // Enqueue elements
+		fbQueue.Enqueue(1);
+		fbQueue.Enqueue(2);
+		fbQueue.Enqueue(3);
+		fbQueue.Enqueue(4);
+		fbQueue.Enqueue(5);
+		bEnqueue_Is_Empty := fbQueue.Is_Empty();
+		nEnqueue_Size := fbQueue.Size();
+		Enqueue_Peek := fbQueue.Peek(0);
+		fbQueue.Show(aEnqueue_Show);
+		
+		nState := nState + 1;
+	
+	2: // Dequeue elements
+		fbQueue.Dequeue();
+		fbQueue.Dequeue(); 
+		bDequeue_Is_Empty := fbQueue.Is_Empty();
+		nDequeue_Size := fbQueue.Size();
+		Dequeue_Peek := fbQueue.Peek(0);
+		fbQueue.Show(aDequeue_Show);
+		
+		nState := nState + 1;
+	
+	3: // Empty Queue
+		fbQueue.Empty();
+		bEmpty_Is_Empty := fbQueue.Is_Empty();
+		nEmpty_Size := fbQueue.Size();
+		Empty_Peek := fbQueue.Peek(0);
+		fbQueue.Show(aEmpty_Show);
+		
+		nState := nState + 1;
+	
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="P_Dynamic_Array_Queue">
+      <LineId Id="100" Count="40" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

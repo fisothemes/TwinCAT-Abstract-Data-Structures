@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="FB_Base_Linked_List" Id="{19223dee-072c-4cbb-9e58-eedc7741ea7e}" SpecialFunc="None">
+  <POU Name="FB_Singly_Linked_List" Id="{19223dee-072c-4cbb-9e58-eedc7741ea7e}" SpecialFunc="None">
     <Declaration><![CDATA[// Linear/Singly Linked List
-FUNCTION_BLOCK FB_Base_Linked_List IMPLEMENTS I_Linked_List
+FUNCTION_BLOCK FB_Singly_Linked_List IMPLEMENTS I_Linked_List
 VAR_INPUT
 END_VAR
 VAR_OUTPUT
@@ -10,8 +10,8 @@ END_VAR
 VAR
 	pHead :  POINTER TO ST_NODE;
 	pTail :  POINTER TO ST_NODE;
-END_VAR
-]]></Declaration>
+	t_Null: T_DATA_TYPE;
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
@@ -62,8 +62,9 @@ END_VAR
 METHOD Init
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pHead := NULL;
-pTail := NULL;
+        <ST><![CDATA[THIS^.Empty();
+pHead := 0;
+pTail := 0;
 ]]></ST>
       </Implementation>
     </Method>
@@ -72,36 +73,47 @@ pTail := NULL;
 METHOD Insert
 VAR_INPUT
 	Data 		: T_DATA_TYPE; 	// Data to add to new node.
-	nPosition 	: UXINT;		// Position to add new node in list.
+	nPosition 	: DINT;		// Position to add new node in list.
 END_VAR
 VAR
 	pPrevious 	: POINTER TO ST_NODE;
 	pCurrent 	: POINTER TO ST_NODE;
 	pTemp 		: POINTER TO ST_NODE;
-	i 			: UXINT;
+	i 			: DINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pTemp := __NEW(ST_NODE);
-pCurrent := pHead;
-FOR i := 2 TO nPosition DO
-	pPrevious := pCurrent;
+        <ST><![CDATA[IF nPosition < 0 THEN RETURN; END_IF
+IF nPosition = 0 THEN THIS^.Push(Data); RETURN; END_IF
+pTemp := __NEW(ST_NODE);
+pCurrent := THIS^.pHead;
+FOR i := 1 TO nPosition DO // traverse
+	pPrevious := pCurrent; 
 	pCurrent := pPrevious^.pNext;
+	IF pCurrent = 0 THEN EXIT; END_IF
 	END_FOR;
 pTemp^.Data := Data;
-pPrevious^.pNext := pTemp;
+IF pPrevious <> 0 THEN pPrevious^.pNext := pTemp; END_IF
 pTemp^.pNext := pCurrent;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{b127cec4-b9e8-49d2-b4ab-58350867c39b}">
+      <Declaration><![CDATA[(* Checks of list is empty.*)
+METHOD Is_Empty : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Empty := pHead = 0;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Peek" Id="{f9661eb4-84c7-4278-8349-13b6ce0350b5}">
       <Declaration><![CDATA[// Gets element at any position of the list. Returns 0 if element is not found
 METHOD Peek : T_DATA_TYPE
 VAR_INPUT
-	nPosition : UXINT;
+	nPosition : DINT;
 END_VAR
 VAR 
-	i : UXINT;
-	pTemp : POINTER TO ST_NODE;
+	i 		: DINT;
+	pTemp 	: POINTER TO ST_NODE;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -125,7 +137,8 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Pop := pHead^.Data;
+        <ST><![CDATA[IF THIS^.pHead = 0 THEN RETURN; END_IF 
+Pop := pHead^.Data;
 pTemp := pHead^.pNext;
 __DELETE(pHead);
 pHead := pTemp;]]></ST>
@@ -142,27 +155,28 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pTemp := __NEW(ST_NODE); 	// Allocate space in memory for a node.
+        <ST><![CDATA[pTemp := __NEW(ST_NODE);
 pTemp^.Data := Data;
-pTemp^.pNext := pHead;
-pHead := pTemp;]]></ST>
+IF THIS^.pHead = 0 THEN THIS^.pHead := pTemp; THIS^.pTail := THIS^.pHead;
+ELSE pTemp^.pNext := THIS^.pHead; THIS^.pHead := pTemp; END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Remove" Id="{e27d3464-0225-4467-9f8c-0a726d2728f5}">
       <Declaration><![CDATA[// Deletes node at a specific position in the list
 METHOD Remove : T_DATA_TYPE
 VAR_INPUT
-	nPosition 	: UXINT; // Position of node to delete.
+	nPosition 	: DINT; // Position of node to delete.
 END_VAR
 VAR
 	pPrevious 	: POINTER TO ST_NODE;
 	pCurrent 	: POINTER TO ST_NODE;
-	i 			: UXINT;
-END_VAR
-]]></Declaration>
+	i 			: DINT;
+END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pCurrent := pHead;
-FOR i := 2 TO nPosition DO
+        <ST><![CDATA[IF nPosition < 0 THEN RETURN; END_IF
+pCurrent := pHead;
+FOR i := 1 TO nPosition DO
 	pPrevious := pCurrent;
 	pCurrent := pCurrent^.pNext;
 	END_FOR;
@@ -175,10 +189,10 @@ __DELETE(pCurrent);]]></ST>
       <Declaration><![CDATA[// Reverses list
 METHOD Reverse
 VAR
-	pPrevious 		: POINTER TO ST_NODE;
-	pCurrent 		: POINTER TO ST_NODE;
-	pNext	 		: POINTER TO ST_NODE;
-	i : UXINT;
+	pPrevious 	: POINTER TO ST_NODE;
+	pCurrent 	: POINTER TO ST_NODE;
+	pNext	 	: POINTER TO ST_NODE;
+	i 			: DINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pCurrent := pHead;
@@ -189,8 +203,7 @@ WHILE pCurrent <> 0 DO
 	pPrevious := pCurrent;
 	pCurrent := pNext;
 END_WHILE
-pHead := pPrevious;
-]]></ST>
+pHead := pPrevious;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Search" Id="{da5f7172-2114-4eed-8448-2548351cb82a}">
@@ -200,11 +213,11 @@ VAR_INPUT
 	Data : T_DATA_TYPE; // Data to find in list
 END_VAR
 VAR_OUTPUT
-	nPosition : UXINT; // Location of the data  starting from 1. 0 means data is not found in list
+	nPosition : DINT; // Location of the data  starting from 1. 0 means data is not found in list
 END_VAR
 VAR
 	pTemp 	: POINTER TO ST_NODE;
-	i 		: UXINT;
+	i 		: DINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pTemp := pHead;
@@ -223,25 +236,27 @@ VAR_IN_OUT
 	aList 		: ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
 END_VAR
 VAR
-	pCurrent 	:  POINTER TO ST_NODE;
+	pCurrent 	: POINTER TO ST_NODE;
 	i 			: DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pCurrent := pHead;
-i := LOWER_BOUND(aList, 1);
-WHILE pCurrent <> 0 AND i <= UPPER_BOUND(aList, 1) DO
-	aList[i] := pCurrent^.Data;
-	pCurrent := pCurrent^.pNext;
-	i := i+1;
-END_WHILE]]></ST>
+        <ST><![CDATA[pCurrent := THIS^.pHead;
+FOR i := LOWER_BOUND(aList, 1) TO UPPER_BOUND(aList, 1) DO
+	IF pCurrent <> 0 THEN 
+		aList[i] := pCurrent^.Data; 
+		pCurrent := pCurrent^.pNext;
+	ELSE
+		aList[i] := t_Null;
+		END_IF
+	END_FOR]]></ST>
       </Implementation>
     </Method>
     <Method Name="Size" Id="{cdf20009-0222-43c5-990c-054c16153aa7}">
       <Declaration><![CDATA[// Gets size of the list
-METHOD Size : UXINT;
+METHOD Size : DINT;
 VAR
 	pTemp 	: POINTER TO ST_NODE;
-	i 		: UXINT;
+	i 		: dINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -252,15 +267,15 @@ END_WHILE
 Size := i;]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_Base_Linked_List">
+    <LineIds Name="FB_Singly_Linked_List">
       <LineId Id="24" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Create">
+    <LineIds Name="FB_Singly_Linked_List.Create">
       <LineId Id="48" Count="1" />
       <LineId Id="51" Count="1" />
       <LineId Id="60" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Empty">
+    <LineIds Name="FB_Singly_Linked_List.Empty">
       <LineId Id="56" Count="0" />
       <LineId Id="31" Count="0" />
       <LineId Id="24" Count="0" />
@@ -268,23 +283,22 @@ Size := i;]]></ST>
       <LineId Id="22" Count="0" />
       <LineId Id="51" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.FB_exit">
+    <LineIds Name="FB_Singly_Linked_List.FB_exit">
       <LineId Id="6" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Init">
-      <LineId Id="6" Count="0" />
+    <LineIds Name="FB_Singly_Linked_List.Init">
+      <LineId Id="33" Count="1" />
       <LineId Id="5" Count="0" />
       <LineId Id="30" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Insert">
-      <LineId Id="52" Count="1" />
-      <LineId Id="43" Count="1" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="60" Count="1" />
+    <LineIds Name="FB_Singly_Linked_List.Insert">
+      <LineId Id="76" Count="10" />
+      <LineId Id="74" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Peek">
+    <LineIds Name="FB_Singly_Linked_List.Is_Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Singly_Linked_List.Peek">
       <LineId Id="17" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="20" Count="2" />
@@ -293,47 +307,37 @@ Size := i;]]></ST>
       <LineId Id="19" Count="0" />
       <LineId Id="11" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Pop">
+    <LineIds Name="FB_Singly_Linked_List.Pop">
+      <LineId Id="25" Count="0" />
       <LineId Id="19" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="13" Count="0" />
       <LineId Id="12" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Push">
-      <LineId Id="30" Count="2" />
+    <LineIds Name="FB_Singly_Linked_List.Push">
+      <LineId Id="41" Count="3" />
       <LineId Id="13" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Remove">
-      <LineId Id="53" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="91" Count="0" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="5" Count="0" />
+    <LineIds Name="FB_Singly_Linked_List.Remove">
+      <LineId Id="120" Count="7" />
       <LineId Id="90" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Reverse">
-      <LineId Id="46" Count="1" />
-      <LineId Id="42" Count="1" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="48" Count="1" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="50" Count="0" />
+    <LineIds Name="FB_Singly_Linked_List.Reverse">
+      <LineId Id="58" Count="7" />
       <LineId Id="13" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Search">
+    <LineIds Name="FB_Singly_Linked_List.Search">
       <LineId Id="5" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="93" Count="0" />
       <LineId Id="90" Count="2" />
       <LineId Id="88" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Show">
-      <LineId Id="30" Count="5" />
+    <LineIds Name="FB_Singly_Linked_List.Show">
+      <LineId Id="44" Count="7" />
       <LineId Id="10" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Base_Linked_List.Size">
+    <LineIds Name="FB_Singly_Linked_List.Size">
       <LineId Id="12" Count="2" />
       <LineId Id="5" Count="0" />
       <LineId Id="15" Count="0" />

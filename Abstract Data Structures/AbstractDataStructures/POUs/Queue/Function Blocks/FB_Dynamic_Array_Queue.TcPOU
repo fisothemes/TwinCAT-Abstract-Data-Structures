@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_Dynamic_Array_Queue" Id="{b7035eec-ee35-4ec7-a2c1-e43c3421e654}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Dynamic_Array_Queue IMPLEMENTS I_Queue
+VAR
+	fbDynamic_Array : FB_Dynamic_Array(10);
+	nSize 			: DINT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Dequeue" Id="{ba8e9703-e077-4d22-a650-4de477e1e6f1}">
+      <Declaration><![CDATA[(* Removes element from the front of the queue. *)
+METHOD Dequeue : T_DATA_TYPE
+VAR 
+	i : DINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Dequeue := THIS^.fbDynamic_Array.Access(0);
+IF THIS^.Is_Empty() THEN RETURN; END_IF
+nSize := THIS^.Size() - 1;
+FOR i := 1 TO THIS^.nSize DO
+	THIS^.fbDynamic_Array.Insert(THIS^.fbDynamic_Array.Access(i),i-1);
+	END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Empty" Id="{6d46d63e-71b4-4793-bcaf-901933b0957d}">
+      <Declaration><![CDATA[(* Empties/Clears/Deletes all elements on the stack. *)
+METHOD Empty
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.fbDynamic_Array.Clear(); 
+THIS^.nSize := THIS^.fbDynamic_Array.Size();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Enqueue" Id="{7d368e48-fa5c-4d84-a7ed-926c87b49a1f}">
+      <Declaration><![CDATA[(* Adds element to the rear of the queue. *)
+METHOD Enqueue
+VAR_INPUT
+	Data	: T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nSize := THIS^.Size() + 1;
+THIS^.fbDynamic_Array.Insert(Data, THIS^.Size()-1);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{e3ab8ca3-f325-4d48-97bf-d47628697a02}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	(* if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.Empty();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{165f2438-ca7c-4d5c-a0e7-ddde9f67fd36}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	(* if TRUE, the retain variables are initialized (warm start / cold start)*)
+	bInitRetains	: BOOL;
+	(* if TRUE, the instance afterwards gets moved into the copy code (online change)*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{fef03a04-5be7-4326-b872-06d2198383a4}">
+      <Declaration><![CDATA[(* Checks of queue is empty. *)
+METHOD Is_Empty : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Empty := nSize = 0;
+IF Is_Empty THEN THIS^.Empty(); END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Peek" Id="{52aea6fd-a35f-4637-b440-9ade52c73072}">
+      <Declaration><![CDATA[(* Gets element at any position of the queue, without removing it.*)
+METHOD Peek : T_DATA_TYPE
+VAR_INPUT
+	nPosition	: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF (nPosition > THIS^.nSize - 1) THEN nPosition := -1; END_IF
+Peek := THIS^.fbDynamic_Array.Access(nPosition);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{12c364a4-84c3-4219-b14b-c529b52112f3}">
+      <Declaration><![CDATA[(* Traverse the queue and display each element as an array. *)
+METHOD Show
+VAR_IN_OUT
+	aList : ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+VAR
+	i,j : DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := LOWER_BOUND(aList, 1) TO UPPER_BOUND(aList, 1) DO
+	IF j < TO_DINT(THIS^.Size()) AND NOT(THIS^.Is_Empty())THEN 
+		aList[i] := THIS^.fbDynamic_Array.Access(j);
+		j := j + 1;
+	ELSE 
+		aList[i] := THIS^.fbDynamic_Array.Access(-1);
+		END_IF
+	END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Size" Id="{30629381-ddb8-49d0-b81c-d91ea1257e83}">
+      <Declaration><![CDATA[(* Gets size of the queue. *)
+METHOD Size : DINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(THIS^.Is_Empty())THEN Size := THIS^.nSize; END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Dynamic_Array_Queue">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Dequeue">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="11" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Empty">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Enqueue">
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.FB_exit">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.FB_init">
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Is_Empty">
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Peek">
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Show">
+      <LineId Id="21" Count="6" />
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array_Queue.Size">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

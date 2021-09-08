@@ -9,10 +9,8 @@ VAR_OUTPUT
 END_VAR
 VAR
 	pData 	: POINTER TO T_DATA_TYPE;
-	nLength : UDINT;
-END_VAR
-VAR CONSTANT 
-	nLength_Init : UDINT := 10;
+	nLength : DINT;
+	t_Null	: T_DATA_TYPE;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -22,13 +20,25 @@ END_VAR
       <Declaration><![CDATA[(* Get element in array from specified poisiton. *)
 METHOD Access : T_DATA_TYPE
 VAR_INPUT
-	nPosition : UDINT;  // Position of element in dynamic array, 0 indexed.
+	nPosition : DINT;  // Position of element in dynamic array, 0 indexed.
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nPosition < THIS^.Size() THEN Access := THIS^.pData[nPosition];
-ELSE Access := 0; END_IF
+        <ST><![CDATA[IF nPosition < 0 THEN Access := t_Null; RETURN; END_IF
+IF THIS^.Is_Empty() THEN FB_Init(FALSE,FALSE,(nPosition+1)*2); END_IF
+IF nPosition >= THIS^.Size() THEN THIS^.Insert(t_Null, nPosition); END_IF
+Access := THIS^.pData[nPosition];
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Clear" Id="{61bd7724-e2ea-4bde-b7bd-c41ffb9830f3}">
+      <Declaration><![CDATA[(* Deletes array from memory. *)
+METHOD Clear
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF NOT(THIS^.Is_Empty()) THEN __DELETE(THIS^.pData); THIS^.Is_Empty(); END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_exit" Id="{ad91c2f7-b680-45b1-adaf-4c5eb0ca9009}">
@@ -38,19 +48,21 @@ VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[__DELETE(THIS^.pData);]]></ST>
+        <ST><![CDATA[THIS^.Clear();]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{ad036e8c-92b0-4824-b55b-41c5ac9fd5d2}">
       <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	bInitRetains 	: BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode 	: BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	nLength 		: DINT; 	// Length to initialize array with, default is 10;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[nLength := nLength_Init;
-THIS^.pData := __NEW(T_DATA_TYPE, nLength);]]></ST>
+        <ST><![CDATA[THIS^.Clear();
+IF nLength > 0 THEN THIS^.pData := __NEW(T_DATA_TYPE, TO_UDINT(nLength)); END_IF
+THIS^.nLength := nLength;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Insert" Id="{50f9e499-240c-4146-8b68-b69faf5e63a6}">
@@ -58,52 +70,63 @@ THIS^.pData := __NEW(T_DATA_TYPE, nLength);]]></ST>
 METHOD Insert
 VAR_INPUT
 	Data 		: T_DATA_TYPE; 	// Data to insert in dynamic array.
-	nPosition 	: UDINT; 		// Position to insert data at in the dynamic array, 0 indexed. 
+	nPosition 	: DINT; 		// Position to insert data at in the dynamic array, 0 indexed. 
 END_VAR
 VAR
-	pTemp_Data : POINTER TO T_DATA_TYPE;
-	nTemp_Length : UDINT;
-	i : DINT;
+	pTemp_Data 		: POINTER TO T_DATA_TYPE;
+	nTemp_Length 	: DINT;
+	i 				: DINT;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nPosition < THIS^.Size() THEN 
+        <ST><![CDATA[IF nPosition < 0 THEN RETURN; END_IF
+IF THIS^.Is_Empty() THEN FB_Init(FALSE,FALSE,(nPosition+1)*2); END_IF
+IF nPosition < THIS^.Size() THEN 
 	THIS^.pData[nPosition] := Data;
 ELSE 
-	pTemp_Data 		:= THIS^.pData; 
-	nTemp_Length 	:= THIS^.nLength;
-	THIS^.nLength 	:= nPosition*2;
-	pData 			:= __NEW(T_DATA_TYPE, THIS^.nLength);
-	FOR i := 0 TO TO_DINT(nTemp_Length-1) DO 
-		pData[i] := pTemp_Data[i]; 
-		END_FOR
-	__DELETE(pTemp_Data);
+	THIS^.Resize((nPosition+1)*2);
 	THIS^.pData[nPosition] := Data;
 	END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{1a6f3f50-0bf0-48ce-b0c8-ea0b99aa03ef}">
+      <Declaration><![CDATA[(* Checks if array is empty. *)
+METHOD Is_Empty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Empty := THIS^.pData = 0;
+IF Is_Empty THEN THIS^.nLength := 0; END_IF ]]></ST>
       </Implementation>
     </Method>
     <Method Name="Resize" Id="{4bcd3e47-7346-4b8d-8a63-f815ad048ac5}">
       <Declaration><![CDATA[(* Manually resize dynamic array length. If Array become smaller, elements higher positions will be deleted. *)
 METHOD Resize
 VAR_INPUT
-	nLength : UDINT; // New length of dynamic array.
+	nLength 		: DINT; // New length of dynamic array.
 END_VAR
 VAR_INST
-	pTemp_Data : POINTER TO T_DATA_TYPE;
-	nTemp_Length : UDINT;
-	i : DINT;
+	pTemp_Data 		: POINTER TO T_DATA_TYPE;
+	nTemp_Length 	: DINT;
+	i 				: DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[pTemp_Data 		:= THIS^.pData; 
+        <ST><![CDATA[IF nLength <= 0 THEN THIS^.Clear(); RETURN; END_IF
+IF THIS^.Is_Empty() THEN FB_init(FALSE,FALSE,nLength); RETURN; END_IF
+IF THIS^.nLength = nLength THEN RETURN; END_IF
+
+pTemp_Data 		:= THIS^.pData; 
+
 nTemp_Length 	:= THIS^.nLength;
 THIS^.nLength 	:= nLength;
-pData := __NEW(T_DATA_TYPE, THIS^.nLength);
+
+THIS^.pData := __NEW(T_DATA_TYPE, TO_UDINT(THIS^.nLength));
 FOR i := 0 TO TO_DINT(nTemp_Length-1) DO 
 	IF i > TO_DINT(THIS^.nLength-1) THEN EXIT; END_IF 
-	pData[i] := pTemp_Data[i]; 
+	THIS^.pData[i] := pTemp_Data[i]; 
 	END_FOR
-__DELETE(pTemp_Data);
-]]></ST>
+__DELETE(pTemp_Data);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Show" Id="{56bd239f-a051-4f7c-9145-a32b851b5534}">
@@ -114,12 +137,11 @@ VAR_IN_OUT
 END_VAR
 VAR
 	i,j : DINT;
-	t_Null : T_DATA_TYPE; 
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[FOR i := LOWER_BOUND(aList, 1) TO UPPER_BOUND(aList, 1) DO
-	IF j < TO_DINT(THIS^.Size()) THEN
+	IF (j < TO_DINT(THIS^.Size())) AND NOT(THIS^.Is_Empty()) THEN
 		aList[i] := THIS^.pData[j];
 		j := j + 1; 
 	ELSE 
@@ -130,58 +152,45 @@ END_VAR
     </Method>
     <Method Name="Size" Id="{0df4cebf-1354-4f54-bdae-d4b312520a8b}">
       <Declaration><![CDATA[(* Gets the length of dynamic array. *)
-METHOD Size : UDINT
+METHOD Size : DINT
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[Size := THIS^.nLength;]]></ST>
+        <ST><![CDATA[Is_Empty(); Size := THIS^.nLength;]]></ST>
       </Implementation>
     </Method>
     <LineIds Name="FB_Dynamic_Array">
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.Access">
-      <LineId Id="5" Count="0" />
+      <LineId Id="16" Count="2" />
       <LineId Id="9" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array.Clear">
+      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.FB_exit">
       <LineId Id="6" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.FB_init">
-      <LineId Id="18" Count="0" />
-      <LineId Id="11" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="25" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.Insert">
-      <LineId Id="16" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="24" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="32" Count="1" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="19" Count="0" />
+      <LineId Id="53" Count="6" />
+      <LineId Id="52" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Dynamic_Array.Is_Empty">
+      <LineId Id="5" Count="1" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.Resize">
-      <LineId Id="13" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="14" Count="2" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="17" Count="1" />
-      <LineId Id="5" Count="0" />
+      <LineId Id="33" Count="13" />
       <LineId Id="22" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.Show">
-      <LineId Id="28" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="21" Count="1" />
-      <LineId Id="18" Count="0" />
+      <LineId Id="39" Count="6" />
       <LineId Id="12" Count="0" />
     </LineIds>
     <LineIds Name="FB_Dynamic_Array.Size">

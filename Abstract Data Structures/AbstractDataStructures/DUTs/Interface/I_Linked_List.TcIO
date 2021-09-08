@@ -14,9 +14,19 @@ END_VAR]]></Declaration>
       <Declaration><![CDATA[// Empties/Clears/Deletes list
 METHOD Empty]]></Declaration>
     </Method>
-    <Method Name="Init" Id="{83cfecda-40d9-4862-aea4-f0d99e7293c1}">
-      <Declaration><![CDATA[// Initializes or create an empty list
-METHOD Init
+    <Method Name="FB_exit" Id="{530bc2ea-7812-493c-bb28-619b1117fab7}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="FB_init" Id="{adbf37c6-d151-47b1-ab40-787bb853ece2}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
 ]]></Declaration>
     </Method>
     <Method Name="Insert" Id="{cc99751b-2841-46ce-a15f-8c4f11f78e71}">
@@ -24,18 +34,32 @@ METHOD Init
 METHOD Insert
 VAR_INPUT
 	Data 		: T_DATA_TYPE; 	// Data to add to new node.
-	nPosition 	: UXINT;		// Position to add new node in list.
+	nPosition 	: DINT;		// Position to add new node in list.
 END_VAR
 ]]></Declaration>
     </Method>
+    <Method Name="Is_Empty" Id="{8b56dadb-dc80-42de-9e9a-516e804d4dd3}">
+      <Declaration><![CDATA[// Checks of list is empty.
+METHOD Is_Empty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Peek" Id="{66028890-0ba3-4fa9-ac10-bd31b89b344e}">
+      <Declaration><![CDATA[// Gets element at any position of the list, wuthout removing it.
+METHOD Peek : T_DATA_TYPE
+VAR_INPUT
+	nPosition : DINT;
+END_VAR]]></Declaration>
+    </Method>
     <Method Name="Pop" Id="{9598b066-6092-4025-84fe-79e56beda60a}">
-      <Declaration><![CDATA[// Deletes/pops a node at the start of the list 
+      <Declaration><![CDATA[// Deletes/pops a node at the front of the list 
 METHOD Pop : T_DATA_TYPE
 
 ]]></Declaration>
     </Method>
     <Method Name="Push" Id="{a3cd6a1f-bd78-45e9-8f76-1abc70bac56a}">
-      <Declaration><![CDATA[// Adds/pushes a node at the start of the list 
+      <Declaration><![CDATA[// Adds/pushes a node at the front of the list 
 METHOD Push
 VAR_INPUT
 		Data 	: T_DATA_TYPE;
@@ -46,7 +70,7 @@ END_VAR
       <Declaration><![CDATA[// Deletes node at a specific position in the list
 METHOD Remove : T_DATA_TYPE
 VAR_INPUT
-	nPosition 	: UXINT; // Position of node to delete.
+	nPosition 	: DINT; // Position of node to delete.
 END_VAR]]></Declaration>
     </Method>
     <Method Name="Reverse" Id="{d2b04faf-d1cd-4384-ba97-65ef9e7d26bf}">
@@ -61,11 +85,12 @@ VAR_INPUT
 	Data : T_DATA_TYPE; // Data to find in list
 END_VAR
 VAR_OUTPUT
-	nPosition : UXINT; // Location of the data  starting from 1. 0 means data is not found in list
+	nPosition : DINT; // Location of the data  starting from 0. -1 means data is not found in list
 END_VAR]]></Declaration>
     </Method>
     <Method Name="Show" Id="{b2cdbc30-559d-4e9f-a327-ce47d09791ed}">
-      <Declaration><![CDATA[METHOD Show
+      <Declaration><![CDATA[// Traverse the list to display each node
+METHOD Show
 VAR_IN_OUT
 	aList 		: ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
 END_VAR
@@ -73,7 +98,7 @@ END_VAR
     </Method>
     <Method Name="Size" Id="{e5340c3e-e4e4-41cc-9659-abfe315073eb}">
       <Declaration><![CDATA[// Gets size of the list
-METHOD Size : UXINT;
+METHOD Size : DINT;
 ]]></Declaration>
     </Method>
   </Itf>

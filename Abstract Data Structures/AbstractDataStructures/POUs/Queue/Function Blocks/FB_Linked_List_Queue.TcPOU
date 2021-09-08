@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_Linked_List_Queue" Id="{4f1203bd-4461-4bf6-ac1b-1010eb6cd6fc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Linked_List_Queue IMPLEMENTS I_Queue
+VAR
+	fbLinked_List : FB_Singly_Linked_List;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Dequeue" Id="{36c56a29-2008-43aa-98cc-8681eb03c4e3}">
+      <Declaration><![CDATA[(* Removes element from the front of the queue. *)
+METHOD Dequeue : T_DATA_TYPE
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Dequeue := THIS^.fbLinked_List.Pop();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Empty" Id="{89bb4ed3-660e-49e6-acbd-cebec57cbf22}">
+      <Declaration><![CDATA[(* Empties/Clears/Deletes all elements on the stack. *)
+METHOD Empty
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.fbLinked_List.Empty();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Enqueue" Id="{8bbe41d5-5089-43fe-940b-a83ea299e3c0}">
+      <Declaration><![CDATA[(* Adds element to the rear of the queue. *)
+METHOD Enqueue
+VAR_INPUT
+	Data	: T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.fbLinked_List.Create(Data);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_exit" Id="{562b1a94-f54e-420c-9e12-225a42181e14}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	(* if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.Empty();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{93113c57-65f1-4df7-8747-8bbe258cdc94}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	(* if TRUE, the retain variables are initialized (warm start / cold start)*)
+	bInitRetains	: BOOL;
+	(* if TRUE, the instance afterwards gets moved into the copy code (online change)*)
+	bInCopyCode	: BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Empty" Id="{ccc19132-53e2-4f82-b091-7fd31c79ed4e}">
+      <Declaration><![CDATA[(* Checks of queue is empty. *)
+METHOD Is_Empty : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Empty := THIS^.fbLinked_List.Is_Empty();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Peek" Id="{002c8ba8-ddf7-458f-a558-b892ba1f6a39}">
+      <Declaration><![CDATA[(* Gets element at any position of the queue, without removing it.*)
+METHOD Peek : T_DATA_TYPE
+VAR_INPUT
+	nPosition	: DINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Peek := THIS^.fbLinked_List.Peek(nPosition);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Show" Id="{a894857c-ef29-4206-bcd0-db8721199075}">
+      <Declaration><![CDATA[(* Traverse the queue and display each element as an array. *)
+METHOD Show
+VAR_IN_OUT
+	aList :  ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.fbLinked_List.Show(aList);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Size" Id="{24bb2dc8-1984-401c-927f-bd9b3255464e}">
+      <Declaration><![CDATA[(* Gets size of the queue. *)
+METHOD Size : DINT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Size := THIS^.fbLinked_List.Size();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Linked_List_Queue">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Dequeue">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Enqueue">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.FB_exit">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.FB_init">
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Is_Empty">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Peek">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Show">
+      <LineId Id="15" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Linked_List_Queue.Size">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

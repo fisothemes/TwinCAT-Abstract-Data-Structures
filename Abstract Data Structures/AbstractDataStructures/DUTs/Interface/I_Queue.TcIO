@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <Itf Name="I_Queue" Id="{88dc387d-7152-4d4a-bee6-f1274bfb5237}">
+    <Declaration><![CDATA[INTERFACE I_Queue
+]]></Declaration>
+    <Method Name="Dequeue" Id="{04f7b95a-266f-4895-b766-645c7fd6c23c}">
+      <Declaration><![CDATA[(* Removes element from the front of the queue. *)
+METHOD Dequeue : T_DATA_TYPE
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Empty" Id="{650a0080-6c1d-4b5e-9088-afcc874848bd}">
+      <Declaration><![CDATA[(* Empties/Clears/Deletes all elements on the stack. *)
+METHOD Empty]]></Declaration>
+    </Method>
+    <Method Name="Enqueue" Id="{e8a11593-9787-420f-ad5d-1568e96cecb2}">
+      <Declaration><![CDATA[(* Adds element to the rear of the queue. *)
+METHOD Enqueue
+VAR_INPUT
+	Data 	: T_DATA_TYPE;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="FB_exit" Id="{1174579a-395f-45f8-864e-c3b3d4e9333f}">
+      <Declaration><![CDATA[METHOD FB_exit : BOOL
+VAR_INPUT
+	bInCopyCode : BOOL; // if TRUE, the exit method is called for exiting an instance that is copied afterwards (online change).
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="FB_init" Id="{0bfd7fb0-2374-4bcb-87e0-26f0d0674b75}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Is_Empty" Id="{f8a89ecc-2bf3-4966-b6da-f5f1e59d45b8}">
+      <Declaration><![CDATA[(* Checks of queue is empty. *)
+METHOD Is_Empty : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Peek" Id="{183439c7-78c9-44ff-abf1-e1d90c767ce6}">
+      <Declaration><![CDATA[// Gets element at any position of the queue, without removing it.
+METHOD Peek : T_DATA_TYPE
+VAR_INPUT
+	nPosition : DINT;
+END_VAR]]></Declaration>
+    </Method>
+    <Method Name="Show" Id="{8e00b43a-914a-45bf-8bc9-1d45764f6cb9}">
+      <Declaration><![CDATA[(* Traverse the queue and display each element as an array. *)
+METHOD Show
+VAR_IN_OUT
+	aList : ARRAY[*] OF T_DATA_TYPE; // Array to display data in list.
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Size" Id="{4595053a-2e27-4879-a5cf-3bc815c1966e}">
+      <Declaration><![CDATA[(* Gets size of the queue. *)
+METHOD Size : DINT;
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>
