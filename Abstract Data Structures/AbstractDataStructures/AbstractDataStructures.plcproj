@@ -17,6 +17,9 @@
     <Title>Abstarct Data Structures</Title>
     <ProjectVersion>
     </ProjectVersion>
+    <Company>FisoThemes</Company>
+    <Author>Goodwill Mzumala</Author>
+    <Description>Exploring Abstract Data Structures in Structured Text for use in PLCs</Description>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\Alias\T_DATA_TYPE.TcDUT">
