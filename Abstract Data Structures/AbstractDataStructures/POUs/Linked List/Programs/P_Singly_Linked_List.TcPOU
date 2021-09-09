@@ -10,13 +10,17 @@ VAR
 	bFound 			: BOOL;		// Is data in the created list?
 	nPosition 		: DINT;	// At what position is the data on the list? 0 means no data found. Head mode is 1.
 	
-	nSize 			: DINT; 	// Dispays size of list after it's created
+	nCreate_Size 	: DINT; 	// Dispays size of list after it's created
 	nDelete_Size 	: DINT; 	// Displays size of list after deleting an element.
 	nInsert_Size 	: DINT; 	// Displays size of list after inserting an element.
+	nClear_Size 	: DINT; 	// Displays size of list after clearing all elements.
 	
-	aArray 			: ARRAY[1..6] OF T_DATA_TYPE; // Displays created list.
+	aCreate_Array 	: ARRAY[1..6] OF T_DATA_TYPE; // Displays created list.
 	aDelete_Array 	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after deleting element at a position.
 	aInsert_Array	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after inserting element at a position.
+	aClear_Array	: ARRAY[1..6] OF T_DATA_TYPE; // Displays list after clearing all elements.
+	
+	
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE nState OF 
@@ -26,9 +30,9 @@ END_VAR]]></Declaration>
 		fbLinked_List.Create(3);
 		fbLinked_List.Create(4);
 		fbLinked_List.Create(5);
-		fbLinked_List.Show(aArray);
+		fbLinked_List.Show(aCreate_Array);
 		Peek := fbLinked_List.Peek(1);
-		nSize := fbLinked_List.Size();
+		nCreate_Size := fbLinked_List.Size();
 		bFound := fbLinked_List.Search(Data := 5, nPosition => nPosition);
 
 		nState := nState + 1;			
@@ -51,12 +55,17 @@ END_VAR]]></Declaration>
 		
 	3: // Clear list, then finish.
 		fbLinked_List.Empty();
+		fbLinked_List.Show(aClear_Array);
+		nClear_Size := fbLinked_List.Size();
 		
 		nState := nState + 1;
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="P_Singly_Linked_List">
-      <LineId Id="305" Count="33" />
+      <LineId Id="373" Count="31" />
+      <LineId Id="410" Count="0" />
+      <LineId Id="409" Count="0" />
+      <LineId Id="405" Count="1" />
       <LineId Id="196" Count="0" />
     </LineIds>
   </POU>

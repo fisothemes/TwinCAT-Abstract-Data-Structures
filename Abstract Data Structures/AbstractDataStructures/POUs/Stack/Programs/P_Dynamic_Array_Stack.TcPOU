@@ -9,29 +9,29 @@ VAR
 	
 	// Init
 	bInit_Is_Empty 	: BOOL;
-	nInit_Size 		: ULINT;
+	nInit_Size 		: DINT;
 	Init_Top 		: T_DATA_TYPE;
 	aInit_Stack 	: ARRAY[1..6] OF T_DATA_TYPE;
 	
 	// Pust element to stack
 	bPush_Is_Empty 	: BOOL;
-	nPush_Size 		: ULINT;
+	nPush_Size 		: DINT;
 	Push_Top 		: T_DATA_TYPE;
+	Push_Peek		: T_DATA_TYPE;
 	aPush_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
 	
 	// Pop element from stack
 	bPop_Is_Empty 	: BOOL;
-	nPop_Size 		: ULINT;
+	nPop_Size 		: DINT;
 	Pop_Top 		: T_DATA_TYPE;
 	aPop_Stack 		: ARRAY[1..6] OF T_DATA_TYPE; 
 	
 	// Empty Stack
 	bEmpty_Is_Empty : BOOL;
-	nEmpty_Size 	: ULINT;
+	nEmpty_Size 	: DINT;
 	Empty_Top 		: T_DATA_TYPE;
 	aEmpty_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[CASE nState OF
 	0: // Init
@@ -51,6 +51,7 @@ END_VAR
 		bPush_Is_Empty := fbStack.Is_Empty();
 		nPush_Size := fbStack.Size();
 		Push_Top := fbStack.Top();
+		Push_Peek := fbStack.Peek(2);
 		fbStack.Show(aPush_Stack);
 		
 		nState := nState + 1;
@@ -72,10 +73,11 @@ END_VAR
 		Empty_Top := fbStack.Top();
 		fbStack.Show(aEmpty_Stack);
 		
+		nState := nState + 1;
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="P_Dynamic_Array_Stack">
-      <LineId Id="36" Count="38" />
+      <LineId Id="38" Count="40" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>

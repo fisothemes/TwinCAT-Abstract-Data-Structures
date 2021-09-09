@@ -9,25 +9,26 @@ VAR
 	
 	// Init
 	bInit_Is_Empty 	: BOOL;
-	nInit_Size 		: ULINT;
+	nInit_Size 		: DINT;
 	Init_Top 		: T_DATA_TYPE;
 	aInit_Stack 	: ARRAY[1..6] OF T_DATA_TYPE;
 	
 	// Pust element to stack
 	bPush_Is_Empty 	: BOOL;
-	nPush_Size 		: ULINT;
+	nPush_Size 		: DINT;
 	Push_Top 		: T_DATA_TYPE;
+	Push_Peek		: T_DATA_TYPE;
 	aPush_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
 	
 	// Pop element from stack
 	bPop_Is_Empty 	: BOOL;
-	nPop_Size 		: ULINT;
+	nPop_Size 		: DINT;
 	Pop_Top 		: T_DATA_TYPE;
 	aPop_Stack 		: ARRAY[1..6] OF T_DATA_TYPE; 
 	
 	// Empty Stack
 	bEmpty_Is_Empty : BOOL;
-	nEmpty_Size 	: ULINT;
+	nEmpty_Size 	: DINT;
 	Empty_Top 		: T_DATA_TYPE;
 	aEmpty_Stack 	: ARRAY[1..6] OF T_DATA_TYPE; 
 END_VAR
@@ -51,6 +52,7 @@ END_VAR
 		bPush_Is_Empty := fbStack.Is_Empty();
 		nPush_Size := fbStack.Size();
 		Push_Top := fbStack.Top();
+		Push_Peek := fbStack.Peek(2);
 		fbStack.Show(aPush_Stack);
 		
 		nState := nState + 1;
@@ -72,36 +74,11 @@ END_VAR
 		Empty_Top := fbStack.Top();
 		fbStack.Show(aEmpty_Stack);
 		
+		nState := nState + 1;
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="P_Linked_List_Stack">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="12" Count="3" />
-      <LineId Id="41" Count="1" />
-      <LineId Id="72" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="20" Count="1" />
-      <LineId Id="43" Count="1" />
-      <LineId Id="50" Count="1" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="52" Count="5" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="64" Count="0" />
-      <LineId Id="74" Count="0" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="58" Count="0" />
+      <LineId Id="134" Count="40" />
       <LineId Id="8" Count="0" />
     </LineIds>
   </POU>

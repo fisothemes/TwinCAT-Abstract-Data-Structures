@@ -28,13 +28,13 @@
     <Compile Include="DUTs\Enum\E_TYPE_CLASS.TcDUT">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Interface\I_Stack.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DUTs\Interface\I_Linked_List.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Interface\I_Queue.TcIO">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\Interface\I_Stack.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Struct\ST_NODE.TcDUT">
@@ -52,13 +52,13 @@
     <Compile Include="POUs\Dynamic Array\Programs\P_Dynamic_Array.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Linked List\Function Blocks\FB_Singly_Linked_List.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="POUs\Linked List\Function Blocks\FB_Circular_Linked_List.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Linked List\Function Blocks\FB_Doubly_Linked_List.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Linked List\Function Blocks\FB_Singly_Linked_List.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Linked List\Programs\P_Doubly_Linked_List.TcPOU">
@@ -73,10 +73,10 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Queue\Function Blocks\FB_Linked_List_Queue.TcPOU">
+    <Compile Include="POUs\Queue\Function Blocks\FB_Dynamic_Array_Queue.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Queue\Function Blocks\FB_Dynamic_Array_Queue.TcPOU">
+    <Compile Include="POUs\Queue\Function Blocks\FB_Linked_List_Queue.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Queue\Programs\P_Dynamic_Array_Queue.TcPOU">
@@ -88,10 +88,10 @@
     <Compile Include="POUs\Queue\Programs\P_Queue.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Stack\Function Blocks\FB_Dynamic_Array_Stack.TcPOU">
+    <Compile Include="POUs\Stack\Function Blocks\FB_Linked_List_Stack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Stack\Function Blocks\FB_Linked_List_Stack.TcPOU">
+    <Compile Include="POUs\Stack\Function Blocks\FB_Dynamic_Array_Stack.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Stack\Programs\P_Dynamic_Array_Stack.TcPOU">
@@ -101,9 +101,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Stack\Programs\P_Stack.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Visualization Manager.TcVMO">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -116,13 +113,13 @@
     <Folder Include="GVLs" />
     <Folder Include="POUs\Binary Search Tree\Function Blocks" />
     <Folder Include="POUs\Binary Search Tree\Programs" />
+    <Folder Include="POUs\Binary Search Tree" />
+    <Folder Include="POUs\Dynamic Array" />
     <Folder Include="POUs\Dynamic Array\Function Blocks" />
     <Folder Include="POUs\Dynamic Array\Programs" />
     <Folder Include="POUs\Linked List" />
     <Folder Include="POUs\Linked List\Function Blocks" />
-    <Folder Include="POUs\Binary Search Tree" />
     <Folder Include="POUs\Linked List\Programs" />
-    <Folder Include="POUs\Dynamic Array" />
     <Folder Include="POUs\Queue" />
     <Folder Include="POUs\Queue\Function Blocks" />
     <Folder Include="POUs\Queue\Programs" />

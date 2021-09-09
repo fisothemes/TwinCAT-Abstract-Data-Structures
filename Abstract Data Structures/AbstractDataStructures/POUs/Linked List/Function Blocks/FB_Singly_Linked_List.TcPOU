@@ -117,9 +117,9 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nPosition > 0 AND nPosition <= THIS^.Size() THEN
+        <ST><![CDATA[IF nPosition >= 0 AND nPosition < THIS^.Size() THEN
 	pTemp := pHead;
-	FOR i := 1 TO nPosition DO
+	FOR i := 0 TO nPosition DO
 		Peek := pTemp^.Data;
 		pTemp := pTemp^.pNext;
 		END_FOR
@@ -222,9 +222,10 @@ END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pTemp := pHead;
 WHILE pTemp <> 0 DO
-	i := i + 1;
+	
 	Search := pTemp^.Data = Data;
 	IF Search THEN nPosition := i; EXIT; ELSE nPosition := 0; END_IF
+	i := i + 1;
 	pTemp := pTemp^.pNext;
 END_WHILE]]></ST>
       </Implementation>
@@ -330,7 +331,9 @@ Size := i;]]></ST>
       <LineId Id="5" Count="0" />
       <LineId Id="86" Count="0" />
       <LineId Id="93" Count="0" />
-      <LineId Id="90" Count="2" />
+      <LineId Id="90" Count="1" />
+      <LineId Id="105" Count="0" />
+      <LineId Id="92" Count="0" />
       <LineId Id="88" Count="0" />
     </LineIds>
     <LineIds Name="FB_Singly_Linked_List.Show">
