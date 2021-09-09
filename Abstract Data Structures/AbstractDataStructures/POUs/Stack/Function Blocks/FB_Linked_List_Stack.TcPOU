@@ -96,10 +96,10 @@ END_WHILE]]></ST>
     </Method>
     <Method Name="Size" Id="{9da797e3-9eba-49f3-acd1-f2acb121762a}">
       <Declaration><![CDATA[(* Gets size of the stack*)
-METHOD Size : UXINT
+METHOD Size : UDINT
 VAR
 	pTemp 	: POINTER TO ST_NODE;
-	i 		: UXINT;
+	i 		: UDINT;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[pTemp := THIS^.pHead;
