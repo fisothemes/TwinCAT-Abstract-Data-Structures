@@ -10,9 +10,9 @@ Exploring Abstract Data Structures in Structured Text for use in PLCs
 
 - - - -
 ### Dynamic Array
-Zero indexed array that can change its size at run-time. The array will automatically resize itself when inserting an element in a position out of it's bounds.
-Examples are included on the POU called `P_Dynamic_Array`. Listed below are some, not all, functionalities for manupulating data in the dynamic array. 
-Just run the program and the appropriate boolean data.
+Zero indexed array that can change its size at run-time. The array will automatically resize itself when inserting an element in a position out of its bounds.
+See the POU called `P_Dynamic_Array` for examples. Listed below are some, not all, functionalities for manupulating data in the dynamic array. 
+Just run the program and write the appropriate boolean variables whilst logged in.
 
 **Declaration:** 
 ```Pascal
@@ -21,6 +21,7 @@ Just run the program and the appropriate boolean data.
 //Initalise array with 10 elements type 
 fbDyn_Array : FB_Dynamic_Array(10);
 ```
+
 **Insertion:**
 ```Pascal
 (* <name of array>.Insert(<element to insert>, <position to insert element>) *)
@@ -43,4 +44,44 @@ IF bAccess THEN nAccess := fbDyn_Array.Access(2); bAccess := 0; END_IF
 
 // Changes number of elements in array to five
 fbDyn_Array.Resize(5);
+```
+
+- - - -
+### Linked List
+A zero indexed list of elements in unchained location in memory linked together. This list is dynamic so it can be resized at run-time. 
+Unlike dynamic arrays, it only takes up as much space as needed. The examples below demostrates some of the functionalities available.
+See `P_Singly_Linked_List` POU for more examples.
+
+**Declaration:** 
+```Pascal
+(* <name of list> : FB_<Singly, Doubly, Circular>_Linked_List *)
+
+//Initalise list
+fbLinked_List : FB_Singly_Linked_List;
+```
+
+**Insertions:**
+```Pascal
+(* 
+    <name of list>.Create(<element to insert>); // Insert element at the end of the list
+    <name of list>.Push(<element to insert>);   // Insert element at the start of the list
+    <name of list>.Insert(<element to insert>, <position to insert element>) // Insert element at a specified location 
+*)
+
+// Insert 3 elements into the list
+fbLinked_List.Create(1);
+fbLinked_List.Push(3);
+fbLinked_List.Insert(2,1);
+```
+
+**Deletions:**
+```Pascal
+(* 
+    <name of list>.Pop(); // Remove element at the start of the list
+    <name of list>.Push(<position of element>); // Remove element at a specified location
+ *)
+
+// Remove the last and first element from the list
+fbLinked_list.Remove(2);
+fbLinked_List.Pop();
 ```

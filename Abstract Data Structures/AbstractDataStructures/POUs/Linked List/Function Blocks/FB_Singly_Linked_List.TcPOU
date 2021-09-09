@@ -174,7 +174,7 @@ VAR
 	i 			: DINT;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nPosition < 0 THEN RETURN; END_IF
+        <ST><![CDATA[IF nPosition < 0 OR nPosition > THIS^.Size()-1 THEN  RETURN; END_IF
 pCurrent := pHead;
 FOR i := 1 TO nPosition DO
 	pPrevious := pCurrent;
